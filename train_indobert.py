@@ -39,7 +39,8 @@ from sklearn.metrics import (
 # CONFIG
 # =========================
 
-DEFAULT_MODEL_PATH = "indobert_model"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_MODEL_PATH = os.path.join(SCRIPT_DIR, "indobert_model")
 DEFAULT_TEXT_COL = "text_clean"
 DEFAULT_LABEL_COL = "label_encoded"
 
@@ -151,17 +152,25 @@ def train_indobert_on_labeled(
     # Data collator
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
+    os.makedirs(model_path, exist_ok=True)
+    trainer_output_dir = os.path.join(model_path, "training")
+    training_logging_dir = os.path.join(model_path, "logs")
+    os.makedirs(trainer_output_dir, exist_ok=True)
+    os.makedirs(training_logging_dir, exist_ok=True)
+    print(f"[INFO] Trainer output: {trainer_output_dir}; logs: {training_logging_dir}")
+
+
     # Training args
     training_args = TrainingArguments(
-        output_dir="./results",
-        evaluation_strategy="epoch",
+        output_dir=trainer_output_dir,
+        eval_strategy="epoch",
         save_strategy="epoch",
         learning_rate=LEARNING_RATE,
         per_device_train_batch_size=BATCH_SIZE,
         per_device_eval_batch_size=BATCH_SIZE,
         num_train_epochs=EPOCHS,
         weight_decay=0.01,
-        logging_dir="./logs",
+        logging_dir=training_logging_dir,
         load_best_model_at_end=True,
         metric_for_best_model="accuracy",
         greater_is_better=True,
@@ -214,7 +223,7 @@ def train_indobert_on_labeled(
 
 def main():
     # Paths
-    data_path = "g:/My Drive/University Files/5th Semester/Data Science/Project/preprocessed_data_FINAL_FINAL.csv"
+    data_path = os.path.join(SCRIPT_DIR, "..", "preprocessed_data_FINAL_FINAL.csv")
     text_col = DEFAULT_TEXT_COL
     label_col = DEFAULT_LABEL_COL
     model_path = DEFAULT_MODEL_PATH
