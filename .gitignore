@@ -213,3 +213,5 @@ __marimo__/
 # Model files
 *pkl
 
+# IndoBERT model directory
+indobert_model/
