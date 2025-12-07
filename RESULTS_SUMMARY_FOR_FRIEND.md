@@ -50,6 +50,8 @@ Here's the big picture - all models evaluated on the same 12,595 test articles:
 - `train_indobert.py` - Fine-tune IndoBERT (requires GPU)
 - `compare_models.py` - Evaluate all models on test set
 - `evaluate_model.py` - Detailed evaluation with error analysis
+- `error_analysis.py` - Enhanced error analysis with categorization and visualizations
+- `test_enhanced_analysis.py` - Test script for the enhanced error analysis module
 
 ### Prediction & Deployment
 - `testing.ipynb` - Batch predict on new CSV files
@@ -119,6 +121,40 @@ The models are **very good** at catching obvious hoaxes but struggle with:
 - Sophisticated misinformation that mimics official communication
 
 ---
+### Enhanced Error Analysis Module
+
+For deeper insights into model errors, use the new `error_analysis.py` module. This provides:
+
+- **Error categorization**: Automatically classifies false positives/negatives into categories like "Sensational Language", "Neutral Tone", "Short Text", "Long Text", etc.
+- **Confidence distribution analysis**: Visualizes confidence scores for correct vs incorrect predictions to identify overconfident errors.
+- **Text length correlation**: Examines relationship between text length and error rate.
+- **Word frequency analysis**: Identifies common words in misclassified examples.
+- **Interactive HTML report**: Generates `error_analysis_report.html` with interactive charts and tables.
+- **Export error samples**: Saves `error_samples.csv` for manual review.
+
+**Usage:**
+```python
+from error_analysis import analyze_errors_from_evaluation
+
+# After running evaluation
+analyzer = analyze_errors_from_evaluation(
+    df_with_predictions=eval_df,
+    text_col="text",
+    true_label_col="true_label",
+    pred_label_col="pred_label",
+    confidence_col="confidence",
+    generate_plots=True,
+    output_dir="plots/error_analysis"
+)
+```
+
+**Command-line integration:**
+```bash
+python evaluate_model.py --enhanced-analysis
+```
+
+This enhanced analysis helps you understand *why* the model makes mistakes, not just *how many* mistakes it makes.
+
 
 ## 📈 Plots & Visualizations Generated
 
