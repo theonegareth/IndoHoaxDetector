@@ -187,6 +187,47 @@ Now you can:
   - `eval_df[(eval_df.true_label==1) & (eval_df.pred_label==0)]`
 
 ---
+### 5.3. Enhanced Error Analysis
+
+For deeper error analysis, use the new `error_analysis.py` module:
+
+```python
+from error_analysis import analyze_errors_from_evaluation
+
+# First get evaluation results
+eval_df = run_evaluation()
+
+# Run enhanced error analysis
+analyzer = analyze_errors_from_evaluation(
+    df_with_predictions=eval_df,
+    text_col="text",
+    true_label_col="true_label",
+    pred_label_col="pred_label",
+    confidence_col="confidence",
+    generate_plots=True,
+    output_dir="plots/error_analysis"
+)
+```
+
+This provides:
+- **Error categorization**: Classifies errors by type (sensational language, neutral tone, etc.)
+- **Confidence analysis**: Examines confidence distributions for correct vs incorrect predictions
+- **Text length analysis**: Identifies patterns related to text length
+- **Visualizations**: Generates 6 comprehensive plots in `plots/error_analysis/`
+- **HTML report**: Creates `error_analysis_report.html` with interactive analysis
+- **Error samples**: Exports `error_samples.csv` for manual review
+
+**Key features:**
+- **Error Type Detection**: Automatically categorizes false positives/negatives based on text characteristics
+- **Confidence Distribution**: Visualizes confidence scores for different error types
+- **Word Frequency Analysis**: Identifies common words in misclassified examples
+- **Text Length Correlation**: Examines relationship between text length and error rate
+
+**Command-line usage with enhanced analysis:**
+```bash
+python evaluate_model.py --enhanced-analysis
+```
+
 
 ## 6. Comparative Models
 

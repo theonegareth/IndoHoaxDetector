@@ -132,6 +132,7 @@ def evaluate_model_on_labeled(
     model,
     vectorizer,
     max_examples_to_show: int = 5,
+    enhanced_analysis: bool = False,
 ):
     """
     Evaluate model on already-preprocessed texts.
@@ -202,6 +203,32 @@ def evaluate_model_on_labeled(
     show_examples(fp, "High-confidence False Positives")
     show_examples(fn, "High-confidence False Negatives")
 
+    # Enhanced error analysis
+    if enhanced_analysis:
+        try:
+            from error_analysis import analyze_errors_from_evaluation
+            print("\n" + "="*60)
+            print("ENHANCED ERROR ANALYSIS")
+            print("="*60)
+            analyzer = analyze_errors_from_evaluation(
+                df_with_predictions=df,
+                text_col="text",
+                true_label_col="true_label",
+                pred_label_col="pred_label",
+                confidence_col="confidence",
+                generate_plots=True,
+                output_dir="plots/error_analysis"
+            )
+            print("\n✅ Enhanced error analysis complete!")
+            print("   - Visualizations saved to plots/error_analysis/")
+            print("   - HTML report: error_analysis_report.html")
+            print("   - Error samples: error_samples.csv")
+        except ImportError as e:
+            print(f"\n⚠️  Enhanced error analysis skipped: {e}")
+            print("   Install required packages: pip install matplotlib seaborn wordcloud")
+        except Exception as e:
+            print(f"\n⚠️  Enhanced error analysis failed: {e}")
+
     print("\n[INFO] Evaluation complete.")
     return df
 
@@ -259,6 +286,11 @@ def parse_args():
         default=5,
         help="Max number of FP/FN examples to print for qualitative error analysis.",
     )
+    parser.add_argument(
+        "--enhanced-analysis",
+        action="store_true",
+        help="Run enhanced error analysis with categorization and visualizations.",
+    )
     return parser.parse_args()
 
 
@@ -287,6 +319,7 @@ def main():
         model=model,
         vectorizer=vectorizer,
         max_examples_to_show=args.max_show,
+        enhanced_analysis=args.enhanced_analysis,
     )
 
 
@@ -297,6 +330,7 @@ def run_evaluation(
     model_path: str = "logreg_model.pkl",
     vectorizer_path: str = "tfidf_vectorizer.pkl",
     max_show: int = 5,
+    enhanced_analysis: bool = False,
 ):
     """
     JUPYTER-FRIENDLY ENTRYPOINT.
@@ -323,6 +357,7 @@ def run_evaluation(
         model=model,
         vectorizer=vectorizer,
         max_examples_to_show=max_show,
+        enhanced_analysis=enhanced_analysis,
     )
 
 
