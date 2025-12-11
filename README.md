@@ -69,6 +69,25 @@ The pipeline:
    - Probabilities: used for confidence scores and error analysis.
 
 ---
+## 3.1 Hyperparameter Tuning: Logistic Regression Regularization C
+
+We conducted a hyperparameter sweep to evaluate the effect of the regularization parameter C on Logistic Regression performance.
+
+- **C values tested**: [0.01, 0.1, 1, 10]
+- **Dataset**: 62,972 samples (80/20 train-test split)
+- **Results**:
+
+| C     | Accuracy | Precision | Recall   | F1-Score | Training Time (s) |
+|-------|----------|-----------|----------|----------|-------------------|
+| 0.01  | 0.9377   | 0.9411    | 0.9377   | 0.9373   | 0.206            |
+| 0.1   | 0.9657   | 0.9660    | 0.9657   | 0.9657   | 0.233            |
+| 1.0   | 0.9783   | 0.9784    | 0.9783   | 0.9783   | 0.495            |
+| 10.0  | **0.9813** | **0.9813** | **0.9813** | **0.9813** | 0.508            |
+
+- **Conclusion**: Higher C (weaker regularization) yields better accuracy up to C=10.0. The best performance is achieved at C=10.0 with 98.13% accuracy.
+
+For detailed results and plots, see [results/logreg_c_sweep_summary.md](results/logreg_c_sweep_summary.md).
+
 
 ## 4. Batch Prediction (testing.ipynb)
 
