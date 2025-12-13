@@ -28,12 +28,16 @@ python train_logreg.py --c_value 10.0 --max_features 5000 --ngram_min 1 --ngram_
 - `--data_path`: Path to CSV file (default: preprocessed_data_FINAL_FINAL.csv)
 - `--text_col`: Text column name (default: text_clean)
 - `--label_col`: Label column name (default: label_encoded)
-- `--output_dir`: Output directory (default: results/)
+- `--test_size`: Proportion of data for test split (default: 0.2)
+- `--cv_folds`: Number of cross-validation folds (default: 5)
+- `--random_state`: Random seed (default: 42)
+- `--output_dir`: Output directory (default: results/train_logreg)
+- `--skip_artifacts`: Skip saving model and vectorizer files
 
 **Outputs:**
-- `logreg_model_c{C}_mf{max_features}_ng{ngram_min}-{ngram_max}.pkl`: Trained model
-- `tfidf_vectorizer_c{C}_mf{max_features}_ng{ngram_min}-{ngram_max}.pkl`: TF-IDF vectorizer
-- `metrics_c{C}_mf{max_features}_ng{ngram_min}-{ngram_max}.json`: Performance metrics
+- `logreg_model_{C_sanitized}.pkl`: Trained model (C_sanitized is a filesystem-safe representation of C)
+- `tfidf_vectorizer_{C_sanitized}.pkl`: TF-IDF vectorizer
+- `metrics_{C_sanitized}.json`: Performance metrics (including cross-validation and test set metrics)
 
 ### 2. `train_svm.py`
 Train a Linear SVM model with configurable C value.
