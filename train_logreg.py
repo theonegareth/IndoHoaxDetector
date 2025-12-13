@@ -1,333 +1,275 @@
 #!/usr/bin/env python3
-"""
-Train Logistic Regression model for IndoHoaxDetector with configurable regularization.
+"""Recreate the Logistic Regression training workflow for IndoHoaxDetector."""
 
-This script trains a Logistic Regression model with a specified regularization
-parameter C, evaluates it using 5-fold cross-validation, and saves the model
-and metrics.
-
-Usage:
-    python train_logreg.py --c_value 1.0
-    python train_logreg.py --c_value 0.1 --output_dir results/
-"""
+from __future__ import annotations
 
 import argparse
+import json
+import logging
 import os
-import sys
 import time
 from datetime import datetime
-from typing import Dict, Any
+from typing import Any, Dict, Optional, Tuple
 
 import joblib
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_validate, StratifiedKFold
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    make_scorer
-)
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from sklearn.model_selection import cross_validate, train_test_split
+from sklearn.pipeline import Pipeline
 
-# =========================
-# CONFIGURATION
-# =========================
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DATA_PATH = os.path.join(SCRIPT_DIR, "preprocessed_data_FINAL_FINAL.csv")
 DEFAULT_TEXT_COL = "text_clean"
 DEFAULT_LABEL_COL = "label_encoded"
-DEFAULT_OUTPUT_DIR = os.path.join(SCRIPT_DIR, "results")
+DEFAULT_MAX_FEATURES = 5000
+DEFAULT_NGRAM_RANGE: Tuple[int, int] = (1, 2)
+DEFAULT_TEST_SIZE = 0.2
+DEFAULT_RANDOM_STATE = 42
+DEFAULT_CV_FOLDS = 5
+DEFAULT_OUTPUT_DIR = os.path.join(SCRIPT_DIR, "results", "train_logreg")
 
-# Cross-validation parameters
-CV_FOLDS = 5
-RANDOM_STATE = 42
 
-# =========================
-# DATA LOADING
-# =========================
+def sanitize_c_value(c_value: float) -> str:
+    return f"{c_value:.3g}".replace("-", "neg").replace(".", "_")
 
-def load_data(
-    csv_path: str,
-    text_col: str,
-    label_col: str
-) -> pd.DataFrame:
-    """Load and validate the dataset."""
-    if not os.path.exists(csv_path):
-        print(f"[ERROR] Data file not found: {csv_path}", file=sys.stderr)
-        return pd.DataFrame()
-    
-    print(f"[INFO] Loading data from: {csv_path}")
-    df = pd.read_csv(csv_path)
-    
-    # Validate columns
-    if text_col not in df.columns:
-        print(f"[ERROR] Text column '{text_col}' not found. Available: {list(df.columns)}", file=sys.stderr)
-        return pd.DataFrame()
-    
-    if label_col not in df.columns:
-        print(f"[ERROR] Label column '{label_col}' not found. Available: {list(df.columns)}", file=sys.stderr)
-        return pd.DataFrame()
-    
-    # Select and clean data
-    df = df[[text_col, label_col]].dropna()
-    if df.empty:
-        print("[ERROR] No valid rows after dropping NA values.", file=sys.stderr)
-        return pd.DataFrame()
-    
-    # Rename columns for consistency
+
+def ensure_directory(path: str) -> str:
+    os.makedirs(path, exist_ok=True)
+    return path
+
+
+def clean_dataframe(df: pd.DataFrame, text_col: str, label_col: str) -> pd.DataFrame:
+    if text_col not in df.columns or label_col not in df.columns:
+        missing = [col for col in (text_col, label_col) if col not in df.columns]
+        raise ValueError(f"Missing required columns: {missing}")
+
+    df = df[[text_col, label_col]].dropna().copy()
     df = df.rename(columns={text_col: "text", label_col: "label"})
-    
-    # Validate labels (should be 0 and 1)
     before = len(df)
     df = df[df["label"].isin([0, 1])]
     after = len(df)
-    
+
     if after == 0:
-        print("[ERROR] No rows with valid labels (0/1) after filtering.", file=sys.stderr)
-        return pd.DataFrame()
-    
+        raise ValueError("No rows remain after filtering (labels must be 0 or 1).")
+
     if after < before:
-        print(f"[INFO] Filtered out {before - after} rows with invalid label values.")
-    
-    print(f"[INFO] Loaded {len(df)} valid samples.")
-    print(f"[INFO] Class distribution: {df['label'].value_counts().to_dict()}")
-    
+        logger.info("Filtered out %d rows with invalid labels", before - after)
+
+    class_counts = df["label"].value_counts().reindex([0, 1], fill_value=0)
+    logger.info("Using %d samples (0=%d, 1=%d)", len(df), class_counts[0], class_counts[1])
     return df.reset_index(drop=True)
 
-# =========================
-# MODEL TRAINING AND EVALUATION
-# =========================
 
-def train_and_evaluate(
-    df: pd.DataFrame,
+def load_labeled_data(
+    csv_path: str,
+    text_col: str = DEFAULT_TEXT_COL,
+    label_col: str = DEFAULT_LABEL_COL,
+) -> pd.DataFrame:
+    if not os.path.exists(csv_path):
+        raise FileNotFoundError(f"Labeled CSV not found: {csv_path}")
+
+    df = pd.read_csv(csv_path)
+    logger.info("Loaded data from %s", csv_path)
+    return clean_dataframe(df, text_col, label_col)
+
+
+def train_logistic_regression(
     c_value: float,
-    max_features: int,
-    ngram_range: tuple,
-    output_dir: str
+    *,
+    dataframe: Optional[pd.DataFrame] = None,
+    data_path: Optional[str] = None,
+    text_col: str = DEFAULT_TEXT_COL,
+    label_col: str = DEFAULT_LABEL_COL,
+    max_features: int = DEFAULT_MAX_FEATURES,
+    ngram_range: Tuple[int, int] = DEFAULT_NGRAM_RANGE,
+    test_size: float = DEFAULT_TEST_SIZE,
+    random_state: int = DEFAULT_RANDOM_STATE,
+    cv_folds: int = DEFAULT_CV_FOLDS,
+    artifact_dir: Optional[str] = None,
+    save_artifacts: bool = False,
+    metrics_path: Optional[str] = None,
+    verbose: bool = True,
 ) -> Dict[str, Any]:
-    """Train Logistic Regression model and evaluate with cross-validation."""
-    
-    # Prepare data
-    X = df["text"]
-    y = df["label"]
-    
-    print(f"[INFO] Vectorizing text data with TF-IDF...")
-    print(f"[INFO] max_features={max_features}, ngram_range={ngram_range}")
-    vectorizer = TfidfVectorizer(
-        max_features=max_features,
-        ngram_range=ngram_range
+    if c_value <= 0:
+        raise ValueError("C must be positive")
+
+    if test_size <= 0 or test_size >= 1:
+        raise ValueError("test_size must be between 0 and 1")
+
+    if cv_folds < 2:
+        raise ValueError("cv_folds must be at least 2")
+
+    if dataframe is None:
+        if not data_path:
+            raise ValueError("Provide either a dataframe or a data_path")
+        df = load_labeled_data(data_path, text_col, label_col)
+    else:
+        df = clean_dataframe(dataframe.copy(), text_col, label_col)
+
+    if save_artifacts and artifact_dir is None:
+        artifact_dir = DEFAULT_OUTPUT_DIR
+
+    if artifact_dir:
+        ensure_directory(artifact_dir)
+
+    pipeline = Pipeline([
+        ("tfidf", TfidfVectorizer(max_features=max_features, ngram_range=ngram_range)),
+        ("logreg", LogisticRegression(C=c_value, random_state=random_state, max_iter=1000)),
+    ])
+
+    cv_start = time.time()
+    cv_results = cross_validate(
+        pipeline,
+        df["text"],
+        df["label"],
+        cv=cv_folds,
+        scoring=["accuracy", "precision", "recall", "f1"],
+        n_jobs=1,
+        return_train_score=False,
+        error_score="raise",
     )
-    X_tfidf = vectorizer.fit_transform(X)
-    
-    print(f"[INFO] Training Logistic Regression with C={c_value}")
+    cv_duration = time.time() - cv_start
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        df["text"],
+        df["label"],
+        test_size=test_size,
+        random_state=random_state,
+        stratify=df["label"],
+    )
+
+    vectorizer = TfidfVectorizer(max_features=max_features, ngram_range=ngram_range)
+    X_train_tfidf = vectorizer.fit_transform(X_train)
+    X_test_tfidf = vectorizer.transform(X_test)
+
     model = LogisticRegression(
         C=c_value,
-        random_state=RANDOM_STATE,
+        random_state=random_state,
         max_iter=1000,
-        n_jobs=-1
+        n_jobs=-1,
     )
-    
-    # Perform cross-validation manually for better control
-    print(f"[INFO] Running {CV_FOLDS}-fold cross-validation...")
-    cv = StratifiedKFold(n_splits=CV_FOLDS, shuffle=True, random_state=RANDOM_STATE)
-    
-    accuracy_scores = []
-    precision_scores = []
-    recall_scores = []
-    f1_scores = []
-    
-    start_time = time.time()
-    
-    fold = 1
-    for train_idx, val_idx in cv.split(X_tfidf, y):
-        print(f"[INFO] Training fold {fold}/{CV_FOLDS}...")
-        
-        # Split data
-        X_train_fold = X_tfidf[train_idx]
-        y_train_fold = y.iloc[train_idx]
-        X_val_fold = X_tfidf[val_idx]
-        y_val_fold = y.iloc[val_idx]
-        
-        # Train model on this fold
-        fold_model = LogisticRegression(
-            C=c_value,
-            random_state=RANDOM_STATE,
-            max_iter=1000,
-            n_jobs=-1
+
+    train_start = time.time()
+    model.fit(X_train_tfidf, y_train)
+    training_duration = time.time() - train_start
+
+    y_pred = model.predict(X_test_tfidf)
+    test_accuracy = accuracy_score(y_test, y_pred)
+    test_precision = precision_score(y_test, y_pred, zero_division=0)
+    test_recall = recall_score(y_test, y_pred, zero_division=0)
+    test_f1 = f1_score(y_test, y_pred, zero_division=0)
+
+    if verbose:
+        logger.info(
+            "C=%s | test acc=%.4f prec=%.4f rec=%.4f f1=%.4f",
+            c_value,
+            test_accuracy,
+            test_precision,
+            test_recall,
+            test_f1,
         )
-        fold_model.fit(X_train_fold, y_train_fold)
-        
-        # Predict and calculate metrics
-        y_pred = fold_model.predict(X_val_fold)
-        
-        accuracy_scores.append(accuracy_score(y_val_fold, y_pred))
-        precision_scores.append(precision_score(y_val_fold, y_pred, average='binary', zero_division=0))
-        recall_scores.append(recall_score(y_val_fold, y_pred, average='binary', zero_division=0))
-        f1_scores.append(f1_score(y_val_fold, y_pred, average='binary', zero_division=0))
-        
-        fold += 1
-    
-    training_duration = time.time() - start_time
-    
-    # Calculate mean metrics
+
+    suffix = sanitize_c_value(c_value)
+    model_path = None
+    vectorizer_path = None
+
+    if save_artifacts and artifact_dir:
+        model_path = os.path.join(artifact_dir, f"logreg_model_{suffix}.pkl")
+        vectorizer_path = os.path.join(artifact_dir, f"tfidf_vectorizer_{suffix}.pkl")
+        joblib.dump(model, model_path)
+        joblib.dump(vectorizer, vectorizer_path)
+        logger.info("Saved model to %s", model_path)
+        logger.info("Saved vectorizer to %s", vectorizer_path)
+
+    if metrics_path is None and save_artifacts and artifact_dir:
+        metrics_path = os.path.join(artifact_dir, f"metrics_{suffix}.json")
+
     metrics = {
-        'c_value': c_value,
-        'accuracy_mean': float(np.mean(accuracy_scores)),
-        'accuracy_std': float(np.std(accuracy_scores)),
-        'precision_mean': float(np.mean(precision_scores)),
-        'precision_std': float(np.std(precision_scores)),
-        'recall_mean': float(np.mean(recall_scores)),
-        'recall_std': float(np.std(recall_scores)),
-        'f1_mean': float(np.mean(f1_scores)),
-        'f1_std': float(np.std(f1_scores)),
-        'training_duration': training_duration,
-        'cv_folds': CV_FOLDS,
-        'n_samples': len(df),
-        'timestamp': datetime.now().isoformat()
+        "c_value": c_value,
+        "timestamp": datetime.now().isoformat(),
+        "data_path": data_path or "<in-memory>",
+        "text_column": text_col,
+        "label_column": label_col,
+        "max_features": max_features,
+        "ngram_range": ngram_range,
+        "test_size": test_size,
+        "random_state": random_state,
+        "cv_folds": cv_folds,
+        "n_samples": len(df),
+        "validation_accuracy_mean": float(np.mean(cv_results["test_accuracy"])),
+        "validation_accuracy_std": float(np.std(cv_results["test_accuracy"])),
+        "validation_precision_mean": float(np.mean(cv_results["test_precision"])),
+        "validation_precision_std": float(np.std(cv_results["test_precision"])),
+        "validation_recall_mean": float(np.mean(cv_results["test_recall"])),
+        "validation_recall_std": float(np.std(cv_results["test_recall"])),
+        "validation_f1_mean": float(np.mean(cv_results["test_f1"])),
+        "validation_f1_std": float(np.std(cv_results["test_f1"])),
+        "cv_duration": cv_duration,
+        "training_duration": training_duration,
+        "test_accuracy": test_accuracy,
+        "test_precision": test_precision,
+        "test_recall": test_recall,
+        "test_f1": test_f1,
+        "model_path": model_path,
+        "vectorizer_path": vectorizer_path,
+        "metrics_path": metrics_path,
     }
-    
-    # Print results
-    print("\n" + "="*60)
-    print("CROSS-VALIDATION RESULTS")
-    print("="*60)
-    print(f"C value: {c_value}")
-    print(f"Accuracy:  {metrics['accuracy_mean']:.4f} ± {metrics['accuracy_std']:.4f}")
-    print(f"Precision: {metrics['precision_mean']:.4f} ± {metrics['precision_std']:.4f}")
-    print(f"Recall:    {metrics['recall_mean']:.4f} ± {metrics['recall_std']:.4f}")
-    print(f"F1 Score:  {metrics['f1_mean']:.4f} ± {metrics['f1_std']:.4f}")
-    print(f"Training time: {training_duration:.2f} seconds")
-    print("="*60)
-    
-    # Save model and vectorizer
-    print(f"[INFO] Saving model artifacts...")
-    
-    # Create output directory if it doesn't exist
-    os.makedirs(output_dir, exist_ok=True)
-    
-    # Save TF-IDF vectorizer
-    vectorizer_path = os.path.join(output_dir, f"tfidf_vectorizer_c{c_value}.pkl")
-    joblib.dump(vectorizer, vectorizer_path)
-    
-    # Train final model on full dataset
-    print(f"[INFO] Training final model on full dataset...")
-    final_model = LogisticRegression(
-        C=c_value,
-        random_state=RANDOM_STATE,
-        max_iter=1000,
-        n_jobs=-1
-    )
-    final_model.fit(X_tfidf, y)
-    
-    # Save final model
-    model_path = os.path.join(output_dir, f"logreg_model_c{c_value}.pkl")
-    joblib.dump(final_model, model_path)
-    
-    print(f"[INFO] Saved vectorizer: {vectorizer_path}")
-    print(f"[INFO] Saved model: {model_path}")
-    
+
+    if metrics_path is not None:
+        try:
+            with open(metrics_path, "w") as f:
+                json.dump(metrics, f, indent=2)
+            logger.info("Saved metrics to %s", metrics_path)
+            metrics["metrics_path"] = metrics_path
+        except (OSError, TypeError) as exc:
+            logger.warning("Unable to save metrics file (%s): %s", metrics_path, exc)
+
     return metrics
 
-# =========================
-# MAIN
-# =========================
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Train Logistic Regression model for hoax detection with configurable regularization."
+        description="Train Logistic Regression models for IndoHoaxDetector."
     )
-    parser.add_argument(
-        "--c_value",
-        type=float,
-        required=True,
-        help="Regularization parameter C for Logistic Regression"
-    )
-    parser.add_argument(
-        "--max_features",
-        type=int,
-        default=5000,
-        help="Maximum number of features for TF-IDF vectorizer (default: 5000)"
-    )
-    parser.add_argument(
-        "--ngram_min",
-        type=int,
-        default=1,
-        help="Minimum n-gram size for TF-IDF (default: 1)"
-    )
-    parser.add_argument(
-        "--ngram_max",
-        type=int,
-        default=2,
-        help="Maximum n-gram size for TF-IDF (default: 2)"
-    )
-    parser.add_argument(
-        "--data_path",
-        type=str,
-        default=DEFAULT_DATA_PATH,
-        help=f"Path to preprocessed CSV file (default: {DEFAULT_DATA_PATH})"
-    )
-    parser.add_argument(
-        "--text_col",
-        type=str,
-        default=DEFAULT_TEXT_COL,
-        help=f"Name of text column (default: {DEFAULT_TEXT_COL})"
-    )
-    parser.add_argument(
-        "--label_col",
-        type=str,
-        default=DEFAULT_LABEL_COL,
-        help=f"Name of label column (default: {DEFAULT_LABEL_COL})"
-    )
-    parser.add_argument(
-        "--output_dir",
-        type=str,
-        default=DEFAULT_OUTPUT_DIR,
-        help=f"Output directory for models and results (default: {DEFAULT_OUTPUT_DIR})"
-    )
-    
+    parser.add_argument("--c_value", type=float, required=True, help="Regularization strength")
+    parser.add_argument("--max_features", type=int, default=DEFAULT_MAX_FEATURES)
+    parser.add_argument("--ngram_min", type=int, default=DEFAULT_NGRAM_RANGE[0])
+    parser.add_argument("--ngram_max", type=int, default=DEFAULT_NGRAM_RANGE[1])
+    parser.add_argument("--data_path", type=str, default=DEFAULT_DATA_PATH)
+    parser.add_argument("--text_col", type=str, default=DEFAULT_TEXT_COL)
+    parser.add_argument("--label_col", type=str, default=DEFAULT_LABEL_COL)
+    parser.add_argument("--test_size", type=float, default=DEFAULT_TEST_SIZE)
+    parser.add_argument("--cv_folds", type=int, default=DEFAULT_CV_FOLDS)
+    parser.add_argument("--random_state", type=int, default=DEFAULT_RANDOM_STATE)
+    parser.add_argument("--output_dir", type=str, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument("--skip_artifacts", action="store_true")
     args = parser.parse_args()
-    
-    # Validate C value
-    if args.c_value <= 0:
-        print(f"[ERROR] C value must be positive. Got: {args.c_value}", file=sys.stderr)
-        sys.exit(1)
-    
-    print(f"[INFO] Starting training with C={args.c_value}")
-    print(f"[INFO] TF-IDF parameters: max_features={args.max_features}, ngram_range=({args.ngram_min},{args.ngram_max})")
-    print(f"[INFO] Data path: {args.data_path}")
-    print(f"[INFO] Output directory: {args.output_dir}")
-    
-    # Load data
-    df = load_data(args.data_path, args.text_col, args.label_col)
-    if df.empty:
-        sys.exit(1)
-    
-    # Train and evaluate
-    try:
-        ngram_range = (args.ngram_min, args.ngram_max)
-        metrics = train_and_evaluate(
-            df,
-            args.c_value,
-            args.max_features,
-            ngram_range,
-            args.output_dir
-        )
-        
-        # Save metrics to JSON for easy parsing
-        import json
-        metrics_path = os.path.join(args.output_dir, f"metrics_c{args.c_value}.json")
-        with open(metrics_path, 'w') as f:
-            json.dump(metrics, f, indent=2)
-        
-        print(f"[INFO] Saved metrics to: {metrics_path}")
-        print("[INFO] Training completed successfully!")
-        
-    except Exception as e:
-        print(f"[ERROR] Training failed: {str(e)}", file=sys.stderr)
-        sys.exit(1)
+
+    ensure_directory(args.output_dir)
+
+    metrics = train_logistic_regression(
+        args.c_value,
+        data_path=args.data_path,
+        text_col=args.text_col,
+        label_col=args.label_col,
+        max_features=args.max_features,
+        ngram_range=(args.ngram_min, args.ngram_max),
+        test_size=args.test_size,
+        random_state=args.random_state,
+        cv_folds=args.cv_folds,
+        artifact_dir=args.output_dir,
+        save_artifacts=not args.skip_artifacts,
+        metrics_path=os.path.join(args.output_dir, f"metrics_{sanitize_c_value(args.c_value)}.json"),
+    )
+
+    print(json.dumps(metrics, indent=2))
+
 
 if __name__ == "__main__":
     main()
