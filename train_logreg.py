@@ -180,8 +180,8 @@ def train_logistic_regression(
     vectorizer_path = None
 
     if save_artifacts and artifact_dir:
-        model_path = os.path.join(artifact_dir, f"logreg_model_{suffix}.pkl")
-        vectorizer_path = os.path.join(artifact_dir, f"tfidf_vectorizer_{suffix}.pkl")
+        model_path = os.path.join(artifact_dir, f"logreg_model_c{c_value}_mf{max_features}_ng{ngram_range[0]}-{ngram_range[1]}.pkl")
+        vectorizer_path = os.path.join(artifact_dir, f"tfidf_vectorizer_c{c_value}_mf{max_features}_ng{ngram_range[0]}-{ngram_range[1]}.pkl")
         joblib.dump(model, model_path)
         joblib.dump(vectorizer, vectorizer_path)
         logger.info("Saved model to %s", model_path)
@@ -265,7 +265,7 @@ def main() -> None:
         cv_folds=args.cv_folds,
         artifact_dir=args.output_dir,
         save_artifacts=not args.skip_artifacts,
-        metrics_path=os.path.join(args.output_dir, f"metrics_{sanitize_c_value(args.c_value)}.json"),
+        metrics_path=os.path.join(args.output_dir, f"metrics_c{args.c_value}_mf{args.max_features}_ng{args.ngram_min}-{args.ngram_max}.json"),
     )
 
     print(json.dumps(metrics, indent=2))
