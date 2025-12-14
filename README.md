@@ -105,6 +105,30 @@ python run_all_experiments.py --max_features 5000 --ngram_min 1 --ngram_max 2
 - `comprehensive_experiment_report.md`: Comprehensive report with analysis and recommendations
 - Individual model files for each configuration
 
+### 7. `run_comprehensive_experiments.py`
+Run systematic grid search across all models and TF‑IDF parameters (max_features: 1000,3000,5000,10000; ngram_range: (1,1),(1,2),(1,3)).
+
+```bash
+python run_comprehensive_experiments.py --models logreg svm nb rf --max_parallel 2
+```
+
+**Parameters:**
+- `--models`: Models to test (default: all)
+- `--max_parallel`: Maximum parallel experiments (default: 2)
+- `--skip_plots`: Skip generating visualization plots
+
+**Outputs:**
+- `comprehensive_experiment_results.csv`: Detailed results for all 228 experiments
+- `comprehensive_experiment_summary.csv`: Summary of successful experiments
+- `comprehensive_experiment_analysis.png`: Multi‑panel visualization
+- `best_configurations.csv`: Best configuration for each model
+- `comprehensive_experiment_report.md`: Detailed analysis and recommendations
+
+### 8. Analysis Scripts
+- `regenerate_summary.py`: Reconstruct CSV summary from JSON metric files (useful if metrics are missing).
+- `analyze_experiments.py`: Generate additional visualizations and detailed analysis.
+- `generate_final_report.py`: Produce a final markdown report from the comprehensive results.
+
 ## File Structure
 
 ```
@@ -115,6 +139,7 @@ IndoHoaxDetector/
 ├── train_rf.py                        # Random Forest training
 ├── run_logreg_experiments.py          # Logistic Regression hyperparameter tuning
 ├── run_all_experiments.py             # Comprehensive multi‑model experiments
+├── run_comprehensive_experiments.py   # Full grid search across models & TF‑IDF
 ├── compare_models.py                  # Model comparison (legacy)
 ├── train_sklearn.py                   # Original training script (legacy)
 ├── train_indobert.py                  # BERT‑based training (separate)
@@ -132,7 +157,25 @@ IndoHoaxDetector/
 │   ├── rf_model_*.pkl
 │   ├── tfidf_vectorizer_*.pkl
 │   └── metrics_*.json
+├── comprehensive_results/             # Output of comprehensive experiments
+│   ├── comprehensive_experiment_results.csv
+│   ├── comprehensive_experiment_summary.csv
+│   ├── comprehensive_experiment_analysis.png
+│   ├── model_comparison.png
+│   ├── parameter_sensitivity.png
+│   ├── tfidf_impact_heatmap.png
+│   ├── training_vs_performance.png
+│   ├── detailed_analysis.txt
+│   ├── experiment_analysis_summary.md
+│   ├── final_experiment_report.md
+│   └── best_configurations.csv
 ├── indobert_model/                    # BERT model directory
+├── Huggingface_Space/                 # Deployment files for Hugging Face Space
+│   ├── app.py
+│   ├── requirements.txt
+│   ├── README.md
+│   ├── logreg_model.pkl
+│   └── tfidf_vectorizer.pkl
 └── README.md                          # This file
 ```
 
@@ -148,8 +191,8 @@ IndoHoaxDetector/
 ## TF‑IDF Vectorization
 
 All models use the same TF‑IDF vectorization with configurable parameters:
-- `max_features`: Maximum vocabulary size (default: 5000)
-- `ngram_range`: Range of n‑grams to extract (default: (1,2) → unigrams + bigrams)
+- `max_features`: Maximum vocabulary size (tested: 1000, 3000, 5000, 10000)
+- `ngram_range`: Range of n‑grams to extract (tested: (1,1), (1,2), (1,3))
 
 ## Evaluation Methodology
 
@@ -158,17 +201,45 @@ All models use the same TF‑IDF vectorization with configurable parameters:
 - **Random seed**: 42 for reproducibility
 - **Training/validation split**: Stratified K‑Fold
 
-## Results Summary (Example)
+## Comprehensive Experiment Results
 
-### Logistic Regression (C=10.0, max_features=5000, ngram_range=(1,2))
-- **Accuracy:** 0.9799 ± 0.0008
-- **F1 Score:** 0.9784 ± 0.0008
-- **Precision:** 0.9817 ± 0.0008
-- **Recall:** 0.9752 ± 0.0019
-- **Training time:** 7.06 seconds
+A systematic grid search across 4 models × 5 hyperparameter values × 4 max_features × 3 ngram_ranges = 240 configurations (228 successful) was conducted. The key findings are:
 
-### Best Model Selection
-The `run_all_experiments.py` script automatically identifies the best‑performing model based on F1 score and provides detailed recommendations in the generated report.
+### Best Overall Configuration
+- **Model**: Linear SVM
+- **Hyperparameter**: C = 1.0
+- **TF‑IDF**: max_features=10000, ngram_range=(1,2)
+- **F1 Score**: 0.9818 ± 0.0012
+- **Accuracy**: 0.9830 ± 0.0011
+- **Precision**: 0.9839 ± 0.0012
+- **Recall**: 0.9796 ± 0.0016
+- **Training time**: 11.39 seconds
+
+### Model Performance Ranking (by F1 Score)
+1. **SVM** – 0.975 (average across all configurations)
+2. **Random Forest** – 0.970
+3. **Naive Bayes** – 0.938
+4. **Logistic Regression** – 0.912
+
+### TF‑IDF Impact
+- **max_features**: Higher values improve performance (10000 > 5000 > 3000 > 1000)
+- **ngram_range**: Bigrams (1,2) perform best overall, followed by unigrams (1,1) and trigrams (1,3).
+
+### Training Time vs Performance
+- **Fastest**: Naive Bayes (0.12–0.23 seconds) with moderate F1 (~0.91–0.94)
+- **Slowest**: Random Forest (up to 323 seconds) with high F1 (~0.97)
+- **Best trade‑off**: SVM (11.39 seconds) with highest F1 (0.9818)
+
+### Visualizations
+The following plots are available in `comprehensive_results/`:
+- `comprehensive_experiment_analysis.png` – Multi‑panel overview
+- `model_comparison.png` – Bar chart of model performance
+- `parameter_sensitivity.png` – Hyperparameter sensitivity curves
+- `tfidf_impact_heatmap.png` – Heatmap of TF‑IDF parameter impact
+- `training_vs_performance.png` – Training time vs F1 scatter plot
+
+## Best Model Selection
+The `run_comprehensive_experiments.py` script automatically identifies the best‑performing model based on F1 score and provides detailed recommendations in the generated report. The best model (SVM with C=1.0, max_features=10000, ngram_range=(1,2)) is recommended for production deployment.
 
 ## Dependencies
 
@@ -189,9 +260,9 @@ pip install pandas numpy scikit-learn matplotlib seaborn joblib
 ```python
 import joblib
 
-# Load the best model (example)
-model = joblib.load('results/logreg_model_c10.0_mf5000_ng1-2.pkl')
-vectorizer = joblib.load('results/tfidf_vectorizer_c10.0_mf5000_ng1-2.pkl')
+# Load the best model (SVM with C=1.0, max_features=10000, ngram_range=(1,2))
+model = joblib.load('comprehensive_results/svm_model_c1.0_mf10000_ng1-2.pkl')
+vectorizer = joblib.load('comprehensive_results/tfidf_vectorizer_svm_c1.0_mf10000_ng1-2.pkl')
 
 # Prepare text
 text = ["Berita tentang kebijakan pemerintah terbaru"]
@@ -204,6 +275,10 @@ probabilities = model.predict_proba(X)[0]
 print(f"Prediction: {'Hoax' if prediction == 1 else 'Legitimate'}")
 print(f"Confidence: {probabilities[prediction]:.3f}")
 ```
+
+## Deployment
+
+The best model can be deployed via the Hugging Face Space in `Huggingface_Space/`. Update the model and vectorizer files with the best configuration and push to the Space.
 
 ## License
 
