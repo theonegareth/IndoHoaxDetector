@@ -1,0 +1,53 @@
+=== Detailed Experiment Analysis ===
+
+Total experiments: 228
+Successful experiments: 228
+Models: svm, rf, nb, logreg
+
+BEST OVERALL CONFIGURATION:
+  Model: SVM
+  Parameter: c_value = 1.0
+  TF‑IDF: max_features=10000, ngram_range=(1,2)
+  F1: 0.9818 ± 0.0012
+  Accuracy: 0.9830 ± 0.0011
+  Training time: 11.39 seconds
+
+BEST CONFIGURATION PER MODEL:
+  SVM:
+    F1: 0.9818 ± 0.0012
+    Params: c_value=1.0, max_features=10000, ngram=(1,2)
+    Training time: 11.39s
+
+  RF:
+    F1: 0.9752 ± 0.0012
+    Params: n_estimators=500.0, max_features=10000, ngram=(1,2)
+    Training time: 273.28s
+
+  NB:
+    F1: 0.9451 ± 0.0022
+    Params: alpha=0.1, max_features=10000, ngram=(1,2)
+    Training time: 0.17s
+
+  LOGREG:
+    F1: 0.9327 ± 0.0408
+    Params: c_value=10.0, max_features=10000, ngram=(1,1)
+    Training time: 2.63s
+
+PARAMETER INSIGHTS:
+  SVM best c_value: 1.0
+  RF best n_estimators: 500.0
+  NB best alpha: 0.1
+  LOGREG best c_value: 10.0
+
+TF‑IDF INSIGHTS:
+  Best max_features: 10000
+  Best ngram_range: (1,2)
+  max_features=1000: average F1 = 0.9367
+  max_features=3000: average F1 = 0.9439
+  max_features=5000: average F1 = 0.9473
+  max_features=10000: average F1 = 0.9506
+
+TIME‑PERFORMANCE TRADE‑OFF:
+  Fastest experiment: nb (0.12s) F1=0.9134
+  Slowest experiment: rf (323.23s) F1=0.9748
+  Correlation (training time vs F1): 0.380
