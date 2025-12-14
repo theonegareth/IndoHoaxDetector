@@ -205,8 +205,8 @@ def run_experiments(experiments: List[Dict[str, Any]], output_dir: str, max_para
         if result['success'] and result['metrics']:
             m = result['metrics']
             print(f"[PROGRESS] {completed}/{len(experiments)} - {experiment['experiment_id']}: "
-                  f"Acc={m.get('accuracy_mean', 0):.4f}±{m.get('accuracy_std', 0):.4f}, "
-                  f"F1={m.get('f1_mean', 0):.4f}±{m.get('f1_std', 0):.4f}")
+                  f"Acc={m.get('validation_accuracy_mean', 0):.4f}±{m.get('validation_accuracy_std', 0):.4f}, "
+                  f"F1={m.get('validation_f1_mean', 0):.4f}±{m.get('validation_f1_std', 0):.4f}")
         else:
             print(f"[PROGRESS] {completed}/{len(experiments)} - {experiment['experiment_id']}: FAILED")
     
@@ -261,14 +261,14 @@ def process_results(results: List[Dict[str, Any]]) -> pd.DataFrame:
             'success': True,
             'experiment_duration': result['experiment_duration'],
             'timestamp': result['timestamp'],
-            'accuracy_mean': m.get('accuracy_mean', float('nan')),
-            'accuracy_std': m.get('accuracy_std', float('nan')),
-            'precision_mean': m.get('precision_mean', float('nan')),
-            'precision_std': m.get('precision_std', float('nan')),
-            'recall_mean': m.get('recall_mean', float('nan')),
-            'recall_std': m.get('recall_std', float('nan')),
-            'f1_mean': m.get('f1_mean', float('nan')),
-            'f1_std': m.get('f1_std', float('nan')),
+            'accuracy_mean': m.get('validation_accuracy_mean', float('nan')),
+            'accuracy_std': m.get('validation_accuracy_std', float('nan')),
+            'precision_mean': m.get('validation_precision_mean', float('nan')),
+            'precision_std': m.get('validation_precision_std', float('nan')),
+            'recall_mean': m.get('validation_recall_mean', float('nan')),
+            'recall_std': m.get('validation_recall_std', float('nan')),
+            'f1_mean': m.get('validation_f1_mean', float('nan')),
+            'f1_std': m.get('validation_f1_std', float('nan')),
             'training_duration': m.get('training_duration', float('nan')),
             'cv_folds': m.get('cv_folds', float('nan')),
             'n_samples': m.get('n_samples', float('nan'))
