@@ -128,6 +128,10 @@ python run_comprehensive_experiments.py --models logreg svm nb rf --max_parallel
 - `regenerate_summary.py`: Reconstruct CSV summary from JSON metric files (useful if metrics are missing).
 - `analyze_experiments.py`: Generate additional visualizations and detailed analysis.
 - `generate_final_report.py`: Produce a final markdown report from the comprehensive results.
+- `feature_importance.py`: Extract and visualize top features from the best SVM model.
+- `generate_confusion_matrices.py`: Generate confusion matrices for each model's best configuration.
+- `statistical_tests_fixed.py`: Perform pairwise statistical significance tests (Welch's t‑test) on cross‑validation scores.
+- `error_analysis_best_model.py`: Analyze misclassified samples from the best SVM model.
 
 ## File Structure
 
@@ -143,8 +147,12 @@ IndoHoaxDetector/
 ├── compare_models.py                  # Model comparison (legacy)
 ├── train_sklearn.py                   # Original training script (legacy)
 ├── train_indobert.py                  # BERT‑based training (separate)
+├── feature_importance.py              # Feature importance analysis
+├── generate_confusion_matrices.py     # Confusion matrix generation
+├── statistical_tests_fixed.py         # Statistical significance tests
+├── error_analysis_best_model.py       # Error analysis for best model
 ├── preprocessed_data_FINAL_FINAL.csv  # Training data (62,972 samples)
-├── results/                           # Experiment outputs
+├── results/                           # Experiment outputs (ignored by git)
 │   ├── experiment_results.csv
 │   ├── experiment_summary.csv
 │   ├── hyperparameter_tuning_results.png
@@ -168,8 +176,15 @@ IndoHoaxDetector/
 │   ├── detailed_analysis.txt
 │   ├── experiment_analysis_summary.md
 │   ├── final_experiment_report.md
+│   ├── advanced_analysis.md           # Advanced analysis report
+│   ├── confusion_matrix_best_svm.png  # Confusion matrix for best SVM
+│   ├── misclassified_samples.csv      # Misclassified samples from error analysis
+│   ├── svm_feature_importance.png     # Feature importance plot
+│   ├── svm_top_features.csv           # Top features for SVM
+│   ├── svm_all_features.csv           # All features with coefficients
+│   ├── statistical_significance.csv   # Pairwise t‑test results
 │   └── best_configurations.csv
-├── indobert_model/                    # BERT model directory
+├── indobert_model/                    # BERT model directory (ignored by git)
 ├── Huggingface_Space/                 # Deployment files for Hugging Face Space
 │   ├── app.py
 │   ├── requirements.txt
@@ -209,17 +224,16 @@ A systematic grid search across 4 models × 5 hyperparameter values × 4 max_fea
 - **Model**: Linear SVM
 - **Hyperparameter**: C = 1.0
 - **TF‑IDF**: max_features=10000, ngram_range=(1,2)
-- **F1 Score**: 0.9818 ± 0.0012
-- **Accuracy**: 0.9830 ± 0.0011
-- **Precision**: 0.9839 ± 0.0012
-- **Recall**: 0.9796 ± 0.0016
+- **F1 Score**: 0.9818 ± 0.0012 (cross‑validation)
+- **Test Accuracy**: 99.69%
+- **Test F1**: 99.67%
 - **Training time**: 11.39 seconds
 
-### Model Performance Ranking (by F1 Score)
-1. **SVM** – 0.975 (average across all configurations)
-2. **Random Forest** – 0.970
-3. **Naive Bayes** – 0.938
-4. **Logistic Regression** – 0.912
+### Model Performance Ranking (by average F1 Score across all configurations)
+1. **SVM** – 0.9710
+2. **Random Forest** – 0.9727
+3. **Naive Bayes** – 0.9285
+4. **Logistic Regression** – 0.9118
 
 ### TF‑IDF Impact
 - **max_features**: Higher values improve performance (10000 > 5000 > 3000 > 1000)
@@ -230,6 +244,14 @@ A systematic grid search across 4 models × 5 hyperparameter values × 4 max_fea
 - **Slowest**: Random Forest (up to 323 seconds) with high F1 (~0.97)
 - **Best trade‑off**: SVM (11.39 seconds) with highest F1 (0.9818)
 
+### Advanced Analysis
+The `advanced_analysis.md` report in `comprehensive_results/` provides:
+- Feature importance analysis for the best SVM model
+- Confusion matrices for each model's best configuration
+- Statistical significance tests (Welch's t‑test) comparing models
+- Error analysis of misclassified samples (only 39 out of 12,595 test samples misclassified by SVM)
+- Detailed recommendations for production deployment
+
 ### Visualizations
 The following plots are available in `comprehensive_results/`:
 - `comprehensive_experiment_analysis.png` – Multi‑panel overview
@@ -237,6 +259,8 @@ The following plots are available in `comprehensive_results/`:
 - `parameter_sensitivity.png` – Hyperparameter sensitivity curves
 - `tfidf_impact_heatmap.png` – Heatmap of TF‑IDF parameter impact
 - `training_vs_performance.png` – Training time vs F1 scatter plot
+- `svm_feature_importance.png` – Top 30 features for SVM
+- `confusion_matrix_best_svm.png` – Confusion matrix for best SVM
 
 ## Best Model Selection
 The `run_comprehensive_experiments.py` script automatically identifies the best‑performing model based on F1 score and provides detailed recommendations in the generated report. The best model (SVM with C=1.0, max_features=10000, ngram_range=(1,2)) is recommended for production deployment.
