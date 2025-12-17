@@ -1,18 +1,18 @@
 # Advanced Analysis of IndoHoaxDetector Models
 
 ## Overview
-This document presents advanced analysis of the best-performing models from the comprehensive experiment grid. It includes feature importance, confusion matrices, statistical significance tests, and insights derived from the experiments.
+This document presents advanced analysis of the best-performing models from the comprehensive experiment grid. It includes feature importance, confusion matrices, statistical significance tests, error analysis, and insights derived from the experiments.
 
 ## 1. Best Model Configurations
 
 | Model | Best Hyperparameters | CV F1 Score (mean ± std) | Test F1 Score | Test Accuracy |
 |-------|----------------------|--------------------------|---------------|---------------|
-| SVM | C=1.0, max_features=10000, ngram_range=(1,2) | 0.9818 ± 0.0012 | 1.0000 | 1.0000 |
+| SVM | C=1.0, max_features=10000, ngram_range=(1,2) | 0.9818 ± 0.0012 | 0.9967 | 0.9969 |
 | Random Forest | n_estimators=500, max_features=10000, ngram_range=(1,2) | 0.9752 ± 0.0012 | 1.0000 | 1.0000 |
 | Naive Bayes | alpha=0.1, max_features=10000, ngram_range=(1,2) | 0.9451 ± 0.0022 | 0.9475 | 0.9517 |
 | Logistic Regression | C=10.0, max_features=10000, ngram_range=(1,1) | 0.9327 ± 0.0408 | 0.7124 | 0.6474 |
 
-**Note:** The test set performance for SVM and Random Forest is 100% because the test set is a subset of the training data (data leakage) or because the model is overfitting. The cross‑validation scores are more reliable.
+**Note:** The test set performance for SVM and Random Forest is extremely high (≥99.69%) but not 100% as previously reported. The cross‑validation scores are more reliable indicators of generalization.
 
 ## 2. Feature Importance for Best SVM Model
 
@@ -41,10 +41,14 @@ The complete list of 10,000 features with their coefficients is available in `sv
 Confusion matrices for each model’s best configuration (evaluated on a held‑out test set of 12,595 samples) are saved in `comprehensive_results/confusion_matrices/`.
 
 ### SVM (C=1.0, max_features=10000, ngram_range=(1,2))
-- **True Positives**: 100%
-- **False Positives**: 0%
-- **False Negatives**: 0%
-- **True Negatives**: 100%
+- **True Positives**: 5849
+- **False Positives**: 12
+- **False Negatives**: 27
+- **True Negatives**: 6707
+- **Accuracy**: 99.69%
+- **Precision**: 99.80%
+- **Recall**: 99.54%
+- **F1**: 99.67%
 
 ### Random Forest (n_estimators=500, max_features=10000, ngram_range=(1,2))
 - **True Positives**: 100%
@@ -64,9 +68,30 @@ Confusion matrices for each model’s best configuration (evaluated on a held‑
 - **Recall**: 93.60%
 - **F1**: 71.24%
 
-The SVM and Random Forest achieve perfect test‑set performance, which may indicate overfitting or data leakage (the test set might be part of the training data). The cross‑validation scores are more realistic.
+The SVM and Random Forest achieve near‑perfect test‑set performance, which may indicate overfitting or data leakage (the test set might be part of the training data). The cross‑validation scores are more realistic.
 
-## 4. Statistical Significance Tests
+## 4. Error Analysis of Best SVM Model
+
+A detailed error analysis was performed on the best SVM model using a held‑out test set (20% of the data). The model misclassified **39 out of 12,595 samples (0.31%)**.
+
+### Misclassification Breakdown
+| True Label | Predicted Label | Count |
+|------------|-----------------|-------|
+| Hoax       | Legitimate      | 27    |
+| Legitimate | Hoax            | 12    |
+
+The model is slightly more likely to misclassify a hoax article as legitimate (false negatives) than to misclassify a legitimate article as hoax (false positives).
+
+### Sample Misclassified Texts
+1. **Hoax → Legitimate**: "alam mendikbud nadiem makarim patah mitos nem ipk rangking alam hidup itupengalaman mendikbudkata nadiem makarimmematahkan mitos nemipk rangking pengaruh sukses nem ipk rangkingsaya arung didik tk sd..."
+2. **Legitimate → Hoax**: "hoaks partai bangkit nusantara seru pki jaya hoaks partai bangkit nusantara seru pki jaya edar media sosial unggah klaim orang seru kalimat pki jaya video orangorang partai bangkit nusantara pkn telusur..."
+
+The full list of misclassified samples is available in `comprehensive_results/misclassified_samples.csv`.
+
+### Top Features for Hoax vs Legitimate (from error analysis)
+The same top features as in the feature importance analysis were observed, confirming that words like `referensi`, `jelas`, `link`, `counter` are strong hoax indicators, while `politik`, `sebut`, `rabu`, `kamis`, `nurita` are associated with legitimate news.
+
+## 5. Statistical Significance Tests
 
 Pairwise Welch’s t‑tests were conducted using the cross‑validation F1 scores (5 folds) to determine whether performance differences are statistically significant (α=0.05).
 
@@ -91,58 +116,68 @@ Pairwise Welch’s t‑tests were conducted using the cross‑validation F1 scor
 - **Naive Bayes**: [0.9424, 0.9479]
 - **Logistic Regression**: [0.8821, 0.9834] (wide due to high variance)
 
-## 5. Key Insights
+## 6. Key Insights
 
-### 5.1 Model Ranking
+### 6.1 Model Ranking
 1. **SVM** – Best overall performance (F1 = 0.9818) with low variance.
 2. **Random Forest** – Very close second (F1 = 0.9752) but significantly worse than SVM.
 3. **Naive Bayes** – Moderate performance (F1 = 0.9451) with fast training.
 4. **Logistic Regression** – Lowest performance (F1 = 0.9327) and high variance.
 
-### 5.2 Impact of TF‑IDF Parameters
+### 6.2 Impact of TF‑IDF Parameters
 - **max_features**: 10,000 yields the highest F1 across all models.
 - **ngram_range**: (1,2) performs best for SVM, RF, and NB; (1,1) is best for Logistic Regression.
 
-### 5.3 Training Time vs Performance
+### 6.3 Training Time vs Performance
 - **Naive Bayes** is the fastest (≈0.17 seconds).
 - **SVM** is relatively fast (≈11 seconds).
 - **Random Forest** is the slowest (≈273 seconds) but offers excellent accuracy.
 - **Logistic Regression** is moderate (≈2.6 seconds) but underperforms.
 
-### 5.4 Feature Importance Insights
+### 6.4 Feature Importance Insights
 - The presence of words like `referensi`, `jelas`, `link`, `counter` strongly indicates hoax articles.
 - Words like `politik`, `sebut`, `rabu`, `kamis`, `nurita` are associated with legitimate news.
 - Bigrams such as `link counter` are highly predictive, suggesting that hoax articles often contain references to external links and counters.
 
-## 6. Recommendations
+### 6.5 Error Analysis Insights
+- The SVM model achieves 99.69% accuracy on the test set, with only 39 misclassifications out of 12,595 samples.
+- Misclassifications are slightly biased toward false negatives (hoax articles predicted as legitimate), which may be acceptable depending on the application (e.g., prioritizing precision over recall).
+- The misclassified texts often contain ambiguous or mixed vocabulary that overlaps with the opposite class.
+
+## 7. Recommendations
 
 ### For Production Deployment
 - **Use SVM with C=1.0, max_features=10000, ngram_range=(1,2)**. It provides the highest F1 score, low variance, and reasonable training time.
 - **Monitor for overfitting** because the test‑set performance is suspiciously perfect. Consider collecting a truly independent test set.
+- **Consider the trade‑off between false positives and false negatives** based on the application. If false positives (legitimate news flagged as hoax) are more costly, adjust the decision threshold.
 
 ### For Further Research
 - **Investigate data leakage** – ensure the test set is not contaminated with training data.
 - **Experiment with deeper feature engineering** – include character n‑grams, syntactic features, or embeddings.
 - **Try ensemble methods** – combine SVM and Random Forest predictions to potentially improve robustness.
 - **Hyperparameter tuning** – use Bayesian optimization or grid search on a narrower range around the best found values.
+- **Analyze misclassified samples** to identify patterns that the model struggles with and improve preprocessing or feature extraction.
 
 ### For Interpretability
 - **Use the feature importance list** to understand what linguistic patterns the model relies on.
 - **Consider deploying a simpler model** (e.g., Naive Bayes) if explainability is more important than the last 3% of F1.
+- **Examine the misclassified samples** to identify potential biases or gaps in the training data.
 
-## 7. Files Generated
+## 8. Files Generated
 
 - `svm_feature_importance.png` – bar chart of top 30 features.
 - `svm_top_features.csv` / `svm_all_features.csv` – feature coefficients.
 - `confusion_matrices/cm_*_best.png` – confusion matrices for each model.
 - `confusion_matrices/metrics_*_best.csv` – test‑set metrics.
+- `confusion_matrix_best_svm.png` – confusion matrix for the best SVM model (from error analysis).
+- `misclassified_samples.csv` – list of misclassified texts with true/predicted labels.
 - `statistical_significance.csv` – pairwise t‑test results.
 - `statistical_summary.md` – detailed statistical report.
 
-## 8. Conclusion
+## 9. Conclusion
 
-The comprehensive experiment grid identified SVM as the best‑performing model for hoax detection on this dataset. The model achieves an F1 score of 0.982 on cross‑validation, with statistically significant superiority over Random Forest and Naive Bayes. The feature importance analysis reveals interpretable patterns that align with domain intuition. Further steps should focus on validating the model on a truly independent test set and exploring more advanced feature representations.
+The comprehensive experiment grid identified SVM as the best‑performing model for hoax detection on this dataset. The model achieves an F1 score of 0.982 on cross‑validation, with statistically significant superiority over Random Forest and Naive Bayes. The feature importance analysis reveals interpretable patterns that align with domain intuition. Error analysis shows that the model misclassifies only 0.31% of test samples, with a slight bias toward false negatives. Further steps should focus on validating the model on a truly independent test set and exploring more advanced feature representations.
 
 ---
 *Generated on 2025‑12‑17*  
-*Analysis scripts: `feature_importance.py`, `generate_confusion_matrices.py`, `statistical_tests_fixed.py`*
+*Analysis scripts: `feature_importance.py`, `generate_confusion_matrices.py`, `statistical_tests_fixed.py`, `error_analysis_best_model.py`*
