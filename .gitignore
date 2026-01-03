@@ -1,22 +1,31 @@
-# Data files
-*.csv
+# Large model files - exclude from git
+*.safetensors
+*.bin
+*.pth
+*.pt
 *.pkl
-*.json
 
-# Results directory
-results/
+# Zone identifier files
+*.Zone.Identifier
 
-# Python cache
+# Experiment logs and checkpoints
+indobert_experiments/*/checkpoint-*/
+indobert_experiments/*/logs/
+indobert_model/training/checkpoint-*/
+indobert_model/logs/
+
+# Data files (too large for git)
+preprocessed_data_FINAL_FINAL.csv
+
+# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
 env/
 venv/
-ENV/
-env.bak/
-venv.bak/
+.env
 
 # IDE
 .vscode/
@@ -28,5 +37,15 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
+# Jupyter
+.ipynb_checkpoints/
+
+# Results and plots (generated files)
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.csv
+*.json
+!comprehensive_results/advanced_analysis.md
+!comprehensive_results/final_comparison/model_summary.md

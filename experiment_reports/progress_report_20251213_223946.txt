@@ -1,0 +1,14 @@
+IndoHoaxDetector Experiment Progress Report
+Generated: Sat Dec 13 10:39:46 PM +07 2025
+===========================================
+Process ID: 217353
+Completed: 233/228 experiments
+Progress: 102%
+CPU Usage: 0%
+Memory Usage: 0%
+
+Model Breakdown:
+  Logistic Regression: 65
+  SVM: 60
+  Naive Bayes: 60
+  Random Forest: 48
