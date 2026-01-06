@@ -1,0 +1,16 @@
+\begin{table}
+\caption{Statistical Significance Tests (Welch's t-test)}
+\label{tab:statistical_analysis}
+\begin{tabular}{llrrrl}
+\toprule
+Model A & Model B & F1 A & F1 B & p-value & Significant \\
+\midrule
+SVM & Random Forest & 9.8180e-01 & 9.7520e-01 & 2.2400e-05 & Yes \\
+SVM & Naive Bayes & 9.8180e-01 & 9.4510e-01 & 3.5000e-08 & Yes \\
+SVM & LogReg & 9.8180e-01 & 9.3270e-01 & 5.4800e-02 & No \\
+Random Forest & Naive Bayes & 9.7520e-01 & 9.4510e-01 & 1.3900e-07 & Yes \\
+Random Forest & LogReg & 9.7520e-01 & 9.3270e-01 & 8.0400e-02 & No \\
+Naive Bayes & LogReg & 9.4510e-01 & 9.3270e-01 & 5.3460e-01 & No \\
+\bottomrule
+\end{tabular}
+\end{table}
