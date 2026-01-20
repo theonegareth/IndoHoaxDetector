@@ -530,6 +530,27 @@ Actual  Fakta    [  6707  |   12  ]  (TN)  (FP)
 | **False Positives** | 12 |
 | **False Negatives** | 27 |
 
+### Model File Sizes
+
+| Model | File Size | Configuration |
+|-------|-----------|---------------|
+| **IndoBERT** | ~2-4 GB | Transformer (not included in comprehensive_results) |
+| **SVM** | 79 KB | C=1.0, max_features=10000, ngram_range=(1,2) |
+| **Random Forest** | 77 MB | n_estimators=100, max_features=10000 |
+| **Naive Bayes** | 314 KB | alpha=1.0, max_features=10000 |
+| **Logistic Regression** | 79 KB | C=10.0, max_features=10000, ngram_range=(1,1) |
+
+**Key Observations:**
+- **Smallest models:** SVM and Logistic Regression (~79 KB each) - linear models with sparse weight vectors
+- **Largest model:** Random Forest (~77 MB) - stores 100 decision trees with ~10,000 features each
+- **Naive Bayes:** Medium size (~314 KB) - stores feature probability distributions
+- **IndoBERT:** Largest (~2-4 GB) - contains pre-trained transformer weights and fine-tuned layers
+
+**Deployment Implications:**
+- Linear models (SVM, LogReg) are ideal for production environments with limited memory
+- Random Forest requires more storage but offers robust predictions
+- IndoBERT requires GPU inference for real-time applications
+
 ---
 
 ## PowerPoint Slide Structure
@@ -744,12 +765,65 @@ Actual  Fakta    [  6707  |   12  ]  (TN)  (FP)
 
 ---
 
+## Python Scripts Used to Generate Results
+
+### Comprehensive Experiments (TF-IDF Models)
+
+| Script | Purpose |
+|--------|---------|
+| `run_comprehensive_experiments.py` | Main experiment runner - runs grid search across all models and TF-IDF parameters |
+| `train_logreg.py` | Train Logistic Regression model |
+| `train_svm.py` | Train Linear SVM model |
+| `train_nb.py` | Train Multinomial Naive Bayes model |
+| `train_rf.py` | Train Random Forest model |
+
+**Experiment Configuration:**
+- **Models:** Logistic Regression, SVM, Naive Bayes, Random Forest
+- **TF-IDF max_features:** [1000, 3000, 5000, 10000]
+- **TF-IDF ngram_range:** [(1,1), (1,2), (1,3)]
+- **Total experiments:** 228 successful out of 240
+- **Evaluation:** 5-fold stratified cross-validation
+
+### IndoBERT Experiments
+
+| Script | Purpose |
+|--------|---------|
+| `train_indobert.py` | Fine-tune IndoBERT transformer model |
+| `train_indobert_experiments.py` | Run IndoBERT hyperparameter tuning |
+
+**IndoBERT Configuration:**
+- **Model:** `indobenchmark/indobert-base-p1`
+- **Max sequence length:** 128 tokens
+- **Batch size:** 16
+- **Epochs:** 3
+- **Learning rates tested:** 1e-5 (best), 2e-5, 3e-5, 5e-5
+- **Best F1-score:** 99.40% (learning rate 1e-5)
+
+### Analysis & Visualization Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `generate_comprehensive_plots.py` | Generate all visualization plots |
+| `generate_confusion_matrices.py` | Generate confusion matrices for all models |
+| `statistical_tests_fixed.py` | Perform Welch's t-test for statistical significance |
+| `feature_importance.py` | Extract and visualize top features |
+| `error_analysis.py` | Analyze misclassified samples |
+| `create_final_comparison.py` | Generate final model comparison report |
+| `create_presentation_materials.py` | Generate all presentation materials |
+| `evaluate_model.py` | Evaluate model performance on test set |
+
+---
+
 ## Dependencies
 - Python 3.8+
 - matplotlib
 - seaborn
 - pandas
 - numpy
+- scikit-learn
+- transformers (for IndoBERT)
+- torch (for IndoBERT)
+- datasets (for IndoBERT)
 
 ## License
 This project is part of the IndoHoaxDetector research project.
