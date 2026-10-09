@@ -1,0 +1,284 @@
+{
+  "categories": {
+    "label_noise": "Label noise: hoax-labelled doc whose verdict is true/clarification/unproven/news, or factual-labelled fact-check article",
+    "too_short": "Too little content (< 15 words)",
+    "truncated": "Truncated scrape: body repeats the title plus < 25 words",
+    "non_news_genre": "Opinion, analysis, video or infographic page",
+    "debunk_residue": "Hoax doc whose surviving text is the fact-checker's rebuttal",
+    "rumour_topic_news": "Factual news about rumours, fraud or denials",
+    "other": "None of the above"
+  },
+  "models": {
+    "SVM": {
+      "n_errors": 300,
+      "n_test": 12587,
+      "rows": {
+        "label_noise": {
+          "errors": 17,
+          "pct_errors": 5.666666666666667,
+          "pct_test": 0.6832446174624612,
+          "lift": 8.293759689922481,
+          "fn": 12,
+          "fp": 5
+        },
+        "too_short": {
+          "errors": 13,
+          "pct_errors": 4.333333333333333,
+          "pct_test": 6.737109716374038,
+          "lift": 0.6432036163522011,
+          "fn": 12,
+          "fp": 1
+        },
+        "truncated": {
+          "errors": 55,
+          "pct_errors": 18.333333333333332,
+          "pct_test": 3.1461031222690075,
+          "lift": 5.827314814814815,
+          "fn": 7,
+          "fp": 48
+        },
+        "non_news_genre": {
+          "errors": 9,
+          "pct_errors": 3.0,
+          "pct_test": 1.0169222213394773,
+          "lift": 2.9500781249999997,
+          "fn": 0,
+          "fp": 9
+        },
+        "debunk_residue": {
+          "errors": 28,
+          "pct_errors": 9.333333333333334,
+          "pct_test": 5.124334630968459,
+          "lift": 1.8213746770025843,
+          "fn": 28,
+          "fp": 0
+        },
+        "rumour_topic_news": {
+          "errors": 10,
+          "pct_errors": 3.3333333333333335,
+          "pct_test": 6.30015094939223,
+          "lift": 0.5290878520386717,
+          "fn": 0,
+          "fp": 10
+        },
+        "other": {
+          "errors": 168,
+          "pct_errors": 56.0,
+          "pct_test": 76.99213474219432,
+          "lift": 0.7273470230110413,
+          "fn": 93,
+          "fp": 75
+        }
+      }
+    },
+    "Logistic Regression": {
+      "n_errors": 299,
+      "n_test": 12587,
+      "rows": {
+        "label_noise": {
+          "errors": 19,
+          "pct_errors": 6.354515050167224,
+          "pct_test": 0.6832446174624612,
+          "lift": 9.300497783308705,
+          "fn": 13,
+          "fp": 6
+        },
+        "too_short": {
+          "errors": 14,
+          "pct_errors": 4.682274247491639,
+          "pct_test": 6.737109716374038,
+          "lift": 0.6949974758629394,
+          "fn": 13,
+          "fp": 1
+        },
+        "truncated": {
+          "errors": 54,
+          "pct_errors": 18.06020066889632,
+          "pct_test": 3.1461031222690075,
+          "lift": 5.74049863180298,
+          "fn": 6,
+          "fp": 48
+        },
+        "non_news_genre": {
+          "errors": 7,
+          "pct_errors": 2.3411371237458196,
+          "pct_test": 1.0169222213394773,
+          "lift": 2.302179138795987,
+          "fn": 0,
+          "fp": 7
+        },
+        "debunk_residue": {
+          "errors": 28,
+          "pct_errors": 9.364548494983278,
+          "pct_test": 5.124334630968459,
+          "lift": 1.827466231106272,
+          "fn": 28,
+          "fp": 0
+        },
+        "rumour_topic_news": {
+          "errors": 10,
+          "pct_errors": 3.3444816053511706,
+          "pct_test": 6.30015094939223,
+          "lift": 0.5308573766274298,
+          "fn": 0,
+          "fp": 10
+        },
+        "other": {
+          "errors": 167,
+          "pct_errors": 55.852842809364546,
+          "pct_test": 76.99213474219432,
+          "lift": 0.7254356954302669,
+          "fn": 92,
+          "fp": 75
+        }
+      }
+    },
+    "IndoBERT": {
+      "n_errors": 32,
+      "n_test": 12587,
+      "rows": {
+        "label_noise": {
+          "errors": 3,
+          "pct_errors": 9.375,
+          "pct_test": 0.6832446174624612,
+          "lift": 13.721293604651164,
+          "fn": 2,
+          "fp": 1
+        },
+        "too_short": {
+          "errors": 1,
+          "pct_errors": 3.125,
+          "pct_test": 6.737109716374038,
+          "lift": 0.46384876179245277,
+          "fn": 1,
+          "fp": 0
+        },
+        "truncated": {
+          "errors": 3,
+          "pct_errors": 9.375,
+          "pct_test": 3.1461031222690075,
+          "lift": 2.979876893939394,
+          "fn": 3,
+          "fp": 0
+        },
+        "non_news_genre": {
+          "errors": 0,
+          "pct_errors": 0.0,
+          "pct_test": 1.0169222213394773,
+          "lift": 0.0,
+          "fn": 0,
+          "fp": 0
+        },
+        "debunk_residue": {
+          "errors": 3,
+          "pct_errors": 9.375,
+          "pct_test": 5.124334630968459,
+          "lift": 1.8295058139534885,
+          "fn": 3,
+          "fp": 0
+        },
+        "rumour_topic_news": {
+          "errors": 1,
+          "pct_errors": 3.125,
+          "pct_test": 6.30015094939223,
+          "lift": 0.49601986128625475,
+          "fn": 0,
+          "fp": 1
+        },
+        "other": {
+          "errors": 21,
+          "pct_errors": 65.625,
+          "pct_test": 76.99213474219432,
+          "lift": 0.8523597925910639,
+          "fn": 15,
+          "fp": 6
+        }
+      }
+    }
+  },
+  "examples": {
+    "label_noise": [
+      {
+        "source": "kompas_4k_cleaned",
+        "label": 0,
+        "title": "Prabowo Resmi Menjadi Cawapres Anies Baswedan"
+      },
+      {
+        "source": "turnbackhoax_10k_cleaned",
+        "label": 1,
+        "title": "Anies Pilih Pembinaan Daripada Cabut KJP Untuk Siswa Yang Berdemo"
+      },
+      {
+        "source": "turnbackhoax_10k_cleaned",
+        "label": 1,
+        "title": "Bukalapak dan ACT Memberikan Klarifikasi Atas Isu Menyokong Kelompok Radikal"
+      }
+    ],
+    "too_short": [
+      {
+        "source": "komdigi_hoaks",
+        "label": 1,
+        "title": "Indikator Rilis Survei Elektabilitas Pilkada Kabupaten Pali"
+      }
+    ],
+    "truncated": [
+      {
+        "source": "turnbackhoax_10k_cleaned",
+        "label": 1,
+        "title": "Bagaimana Ahok dan Djarot memindahkan pohon dalam rangka pembangunan Semanggi"
+      },
+      {
+        "source": "turnbackhoax_10k_cleaned",
+        "label": 1,
+        "title": "Jonru : proses pembubaran HTI cacat hukum, dibubarkan hanya lewat pidato Menteri."
+      },
+      {
+        "source": "turnbackhoax_cleaned",
+        "label": 1,
+        "title": "PSI Sebut Prabowo Menyesal Pernah Didukung Umat Islam"
+      }
+    ],
+    "non_news_genre": [],
+    "debunk_residue": [
+      {
+        "source": "komdigi_hoaks",
+        "label": 1,
+        "title": "3000 TKA China di Meikarta Tidak memiliki Izin atau Ilegal"
+      },
+      {
+        "source": "turnbackhoax_10k_cleaned",
+        "label": 1,
+        "title": "Mulai Tahun Depan, PDIP Minta MUI Agar Babi Panggan Halal…"
+      },
+      {
+        "source": "turnbackhoax_10k_cleaned",
+        "label": 1,
+        "title": "NENEK PENCURI SINGKONG DAN HAKIM MULIA"
+      }
+    ],
+    "rumour_topic_news": [
+      {
+        "source": "tempo_6k_cleaned",
+        "label": 0,
+        "title": "Isu Pintu Rahasia di Rumah Ferdy Sambo untuk Simpan Organ Brigadir J, Polisi: Hoaks"
+      }
+    ],
+    "other": [
+      {
+        "source": "detik_cleaned",
+        "label": 0,
+        "title": "Menteri KKP Monitor Swasembada Garam di Pamekasan Madura"
+      },
+      {
+        "source": "turnbackhoax_cleaned",
+        "label": 1,
+        "title": "Survei LSI Oktober: Vicky Prasetyo-Suwendi Unggul di Pilkada Pemalang"
+      },
+      {
+        "source": "komdigi_hoaks",
+        "label": 1,
+        "title": "Fahri Hamzah dan Fadli Zon Didukung 65 Persen Rakyat Indonesia Maju di Pemilihan Presiden"
+      }
+    ]
+  }
+}

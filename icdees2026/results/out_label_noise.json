@@ -1,0 +1,25 @@
+{
+  "BENAR": {
+    "meaning": "true",
+    "n_in_hoax_class": 171,
+    "n_in_test": 28,
+    "svm_predicts_hoax": 0.8928571428571429
+  },
+  "KLARIFIKASI": {
+    "meaning": "clarification",
+    "n_in_hoax_class": 140,
+    "n_in_test": 34,
+    "svm_predicts_hoax": 0.7941176470588235
+  },
+  "BELUM TERBUKTI": {
+    "meaning": "unproven",
+    "n_in_hoax_class": 34,
+    "n_in_test": 5,
+    "svm_predicts_hoax": 0.8
+  },
+  "summary": {
+    "hoax_docs_with_contradicting_verdict": 345,
+    "pct_of_hoax_class": 1.175989364965743,
+    "factual_docs_titled_HOAKS": 20
+  }
+}

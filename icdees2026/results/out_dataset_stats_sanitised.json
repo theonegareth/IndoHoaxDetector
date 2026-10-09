@@ -1,0 +1,15 @@
+{
+  "n_documents": 62934,
+  "n_factual": 33597,
+  "n_hoax": 29337,
+  "pct_factual": 53.38,
+  "pct_hoax": 46.62,
+  "vocab": 181694,
+  "mean_tokens": 93.5,
+  "median_tokens": 62,
+  "p95_tokens": 244,
+  "max_tokens": 2318,
+  "mean_tokens_factual": 137.4,
+  "mean_tokens_hoax": 43.1,
+  "n_sources": 9
+}

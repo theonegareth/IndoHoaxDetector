@@ -50,3 +50,7 @@ Thumbs.db
 *.json
 !comprehensive_results/advanced_analysis.md
 !comprehensive_results/final_comparison/model_summary.md
+
+# ICDEES 2026 results reported in the paper
+!icdees2026/results/*.json
+!icdees2026/results/*.csv

@@ -1,0 +1,29 @@
+{
+  "corpus": {
+    "n_documents": 62979,
+    "n_factual": 33597,
+    "n_hoax": 29382,
+    "pct_factual": 53.35,
+    "pct_hoax": 46.65,
+    "n_sources": 9,
+    "n_distinct_outlets": 6,
+    "vocab_size_after_preprocessing": 193918,
+    "mean_tokens": 106.1,
+    "median_tokens": 83.0,
+    "p95_tokens": 252.0,
+    "max_tokens": 2430,
+    "min_tokens": 2,
+    "mean_raw_chars": 1254.5,
+    "max_raw_chars": 32491
+  },
+  "duplicates": {
+    "exact_duplicate_rows_after_preprocessing": 13,
+    "exact_duplicate_pct": 0.02,
+    "near_duplicate_rows_200char_prefix": 15,
+    "near_duplicate_pct": 0.02,
+    "duplicate_urls_in_raw_corpus": 0,
+    "texts_with_conflicting_labels": 0,
+    "texts_appearing_in_multiple_sources": 0
+  },
+  "source_label_pure": true
+}

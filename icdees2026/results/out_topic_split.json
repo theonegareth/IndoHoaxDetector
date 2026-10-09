@@ -1,0 +1,29 @@
+{
+  "topic_separated": {
+    "k": 12,
+    "held_out_topics": [
+      10,
+      9,
+      0,
+      8
+    ],
+    "n_train": 46287,
+    "n_test": 16647,
+    "accuracy": 0.9647984621853788,
+    "f1_weighted": 0.9654134346347455,
+    "confusion_matrix": [
+      [
+        13951,
+        394
+      ],
+      [
+        192,
+        2110
+      ]
+    ]
+  },
+  "random_control": {
+    "accuracy": 0.9755511503574218,
+    "f1_weighted": 0.9755530159123802
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "tag": "ib_final_seed42",
+  "seed": 42,
+  "model": "indobenchmark/indobert-base-p1",
+  "device": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "text_variant": "minimal",
+  "n_train": 45312,
+  "n_val": 5035,
+  "n_test": 12587,
+  "n_params": 124442882,
+  "accuracy": 0.9974576944466513,
+  "precision_weighted": 0.9974604854630651,
+  "recall_weighted": 0.9974576944466513,
+  "f1_weighted": 0.9974574702660484,
+  "f1_macro": 0.9974455186376479,
+  "balanced_accuracy": 0.9973594235717127,
+  "roc_auc": 0.999915183390554,
+  "ci95_accuracy": [
+    0.9965043298641455,
+    0.9982521649320728
+  ],
+  "ci95_f1_macro": [
+    0.9965644488581189,
+    0.9982445277886788
+  ],
+  "ci95_roc_auc": [
+    0.9998385873426308,
+    0.9999717319968359
+  ],
+  "confusion_matrix": [
+    [
+      6712,
+      8
+    ],
+    [
+      24,
+      5843
+    ]
+  ],
+  "tokenisation_time_s": 7.898151874542236,
+  "train_time_s": 2531.88649225235,
+  "gpu_inference_time_s_test_set": 28.997719764709473,
+  "gpu_inference_ms_per_doc": 2.303783249758439,
+  "cpu_inference_ms_per_doc_batch1": 77.51165413856506,
+  "model_size_mb": 498.741191,
+  "peak_gpu_memory_train_gb": 2.581605376,
+  "peak_gpu_memory_infer_gb": 1.918858752,
+  "gpu_energy_train_wh": 19.533153482294082,
+  "gpu_mean_power_train_w": 28.85164013506995,
+  "gpu_energy_infer_wh": 0.45579833640290623,
+  "power_samples_train": 2073
+}

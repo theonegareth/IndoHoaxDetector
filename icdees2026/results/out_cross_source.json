@@ -1,0 +1,184 @@
+{
+  "A_random": {
+    "n": 12596,
+    "accuracy": 0.9912670689107653,
+    "f1_weighted": 0.9912645960736367,
+    "confusion_matrix": [
+      [
+        6690,
+        30
+      ],
+      [
+        80,
+        5796
+      ]
+    ],
+    "per_class": {
+      "factual": {
+        "precision": 0.9881831610044313,
+        "recall": 0.9955357142857143,
+        "f1-score": 0.9918458117123795,
+        "support": 6720.0
+      },
+      "hoax": {
+        "precision": 0.9948506694129763,
+        "recall": 0.9863852961198094,
+        "f1-score": 0.9905998974534268,
+        "support": 5876.0
+      },
+      "accuracy": 0.9912670689107653,
+      "macro avg": {
+        "precision": 0.9915169152087038,
+        "recall": 0.9909605052027619,
+        "f1-score": 0.9912228545829032,
+        "support": 12596.0
+      },
+      "weighted avg": {
+        "precision": 0.9912935356796148,
+        "recall": 0.9912670689107653,
+        "f1-score": 0.9912645960736367,
+        "support": 12596.0
+      }
+    }
+  },
+  "B_cross_source": {
+    "n": 26079,
+    "accuracy": 0.9404501706353772,
+    "f1_weighted": 0.9405258529637043,
+    "confusion_matrix": [
+      [
+        10128,
+        678
+      ],
+      [
+        875,
+        14398
+      ]
+    ],
+    "per_class": {
+      "factual": {
+        "precision": 0.9204762337544307,
+        "recall": 0.9372570794003331,
+        "f1-score": 0.928790866156174,
+        "support": 10806.0
+      },
+      "hoax": {
+        "precision": 0.9550278588485009,
+        "recall": 0.9427093563805409,
+        "f1-score": 0.9488286269728822,
+        "support": 15273.0
+      },
+      "accuracy": 0.9404501706353772,
+      "macro avg": {
+        "precision": 0.9377520463014658,
+        "recall": 0.939983217890437,
+        "f1-score": 0.9388097465645281,
+        "support": 26079.0
+      },
+      "weighted avg": {
+        "precision": 0.9407111725964773,
+        "recall": 0.9404501706353772,
+        "f1-score": 0.9405258529637043,
+        "support": 26079.0
+      }
+    },
+    "train_sources": [
+      "cnn_10k_cleaned",
+      "cnn_cleaned",
+      "kompas_4k_cleaned",
+      "kompas_cleaned",
+      "turnbackhoax_cleaned",
+      "turnbackhoax_10k_cleaned"
+    ],
+    "test_sources": [
+      "detik_cleaned",
+      "tempo_6k_cleaned",
+      "komdigi_hoaks"
+    ],
+    "per_source": {
+      "detik_cleaned": {
+        "n": 4214,
+        "label": 0,
+        "accuracy": 0.9909824394874229
+      },
+      "tempo_6k_cleaned": {
+        "n": 6592,
+        "label": 0,
+        "accuracy": 0.9029126213592233
+      },
+      "komdigi_hoaks": {
+        "n": 15273,
+        "label": 1,
+        "accuracy": 0.9427093563805409
+      }
+    }
+  },
+  "C_leave_one_source_out": {
+    "cnn_10k_cleaned": {
+      "label": 0,
+      "n": 9630,
+      "recall_when_unseen": 0.9936656282450675,
+      "recall_in_distribution": 0.9995
+    },
+    "cnn_cleaned": {
+      "label": 0,
+      "n": 4216,
+      "recall_when_unseen": 0.9490037950664136,
+      "recall_in_distribution": 0.998
+    },
+    "detik_cleaned": {
+      "label": 0,
+      "n": 4214,
+      "recall_when_unseen": 0.9914570479354533,
+      "recall_in_distribution": 0.998
+    },
+    "komdigi_hoaks": {
+      "label": 1,
+      "n": 15273,
+      "recall_when_unseen": 0.9361618542526027,
+      "recall_in_distribution": 1.0
+    },
+    "kompas_4k_cleaned": {
+      "label": 0,
+      "n": 4729,
+      "recall_when_unseen": 0.9716641996193699,
+      "recall_in_distribution": 0.9955
+    },
+    "kompas_cleaned": {
+      "label": 0,
+      "n": 4216,
+      "recall_when_unseen": 0.9689278937381404,
+      "recall_in_distribution": 0.998
+    },
+    "tempo_6k_cleaned": {
+      "label": 0,
+      "n": 6592,
+      "recall_when_unseen": 0.897754854368932,
+      "recall_in_distribution": 0.999
+    },
+    "turnbackhoax_10k_cleaned": {
+      "label": 1,
+      "n": 1537,
+      "recall_when_unseen": 0.7208848405985686,
+      "recall_in_distribution": 0.9570592062459337
+    },
+    "turnbackhoax_cleaned": {
+      "label": 1,
+      "n": 12572,
+      "recall_when_unseen": 0.5884505249761375,
+      "recall_in_distribution": 0.998
+    }
+  },
+  "D_xcom_transfer": {
+    "overall_hoax_rate": 0.15618989776293146,
+    "kompascom": {
+      "n": 4934,
+      "hoax_rate": 0.10599918929874341
+    },
+    "VIVAcoid": {
+      "n": 4945,
+      "hoax_rate": 0.20626895854398383
+    },
+    "length_matched_control_hoax_rate": 0.04225
+  }
+}

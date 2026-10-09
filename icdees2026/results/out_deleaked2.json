@@ -1,0 +1,351 @@
+{
+  "A_aggressive_all_sources": {
+    "n_docs": 62934,
+    "n_test": 12587,
+    "accuracy": 0.9754508620004767,
+    "f1_weighted": 0.9754515219843604,
+    "confusion_matrix": [
+      [
+        6563,
+        157
+      ],
+      [
+        152,
+        5715
+      ]
+    ],
+    "per_class": {
+      "factual": {
+        "precision": 0.9773641102010424,
+        "recall": 0.9766369047619048,
+        "f1-score": 0.9770003721622628,
+        "support": 6720.0
+      },
+      "hoax": {
+        "precision": 0.9732629427792916,
+        "recall": 0.9740923811147094,
+        "f1-score": 0.9736774853053923,
+        "support": 5867.0
+      },
+      "accuracy": 0.9754508620004767,
+      "macro avg": {
+        "precision": 0.975313526490167,
+        "recall": 0.9753646429383072,
+        "f1-score": 0.9753389287338275,
+        "support": 12587.0
+      },
+      "weighted avg": {
+        "precision": 0.975452491128713,
+        "recall": 0.9754508620004767,
+        "f1-score": 0.9754515219843604,
+        "support": 12587.0
+      }
+    },
+    "top_hoax_features": [
+      [
+        "com",
+        18.84
+      ],
+      [
+        "yg",
+        16.05
+      ],
+      [
+        "artikel",
+        14.5
+      ],
+      [
+        "edar",
+        11.91
+      ],
+      [
+        "narasi",
+        11.47
+      ],
+      [
+        "judul",
+        10.54
+      ],
+      [
+        "video",
+        9.59
+      ],
+      [
+        "mengatasnamakan",
+        8.72
+      ],
+      [
+        "postingan",
+        8.45
+      ],
+      [
+        "foto",
+        8.2
+      ],
+      [
+        "facebook",
+        7.87
+      ],
+      [
+        "jelas",
+        7.63
+      ],
+      [
+        "edar media",
+        7.18
+      ],
+      [
+        "id",
+        7.03
+      ],
+      [
+        "gak",
+        6.97
+      ]
+    ],
+    "top_factual_features": [
+      [
+        "politik",
+        -18.03
+      ],
+      [
+        "rabu",
+        -12.1
+      ],
+      [
+        "selasa",
+        -11.29
+      ],
+      [
+        "kamis",
+        -11.11
+      ],
+      [
+        "sebut",
+        -10.79
+      ],
+      [
+        "nurita",
+        -10.46
+      ],
+      [
+        "senin",
+        -10.25
+      ],
+      [
+        "respons",
+        -10.06
+      ],
+      [
+        "persen",
+        -9.34
+      ],
+      [
+        "lihat video",
+        -9.15
+      ],
+      [
+        "sabtu",
+        -8.84
+      ],
+      [
+        "jumat",
+        -8.83
+      ],
+      [
+        "terang",
+        -8.81
+      ],
+      [
+        "julnis",
+        -7.99
+      ],
+      [
+        "julnis firmansyah",
+        -7.68
+      ]
+    ],
+    "cross_source": {
+      "n": 26038,
+      "accuracy": 0.884898993778324,
+      "f1_weighted": 0.8842412616457308,
+      "confusion_matrix": [
+        [
+          8946,
+          1860
+        ],
+        [
+          1137,
+          14095
+        ]
+      ]
+    }
+  },
+  "B_drop_komdigi": {
+    "n_docs": 47702,
+    "n_test": 9541,
+    "accuracy": 0.9751598364951263,
+    "f1_weighted": 0.97512501496196,
+    "confusion_matrix": [
+      [
+        6615,
+        105
+      ],
+      [
+        132,
+        2689
+      ]
+    ],
+    "per_class": {
+      "factual": {
+        "precision": 0.9804357492218764,
+        "recall": 0.984375,
+        "f1-score": 0.9824014257072845,
+        "support": 6720.0
+      },
+      "hoax": {
+        "precision": 0.9624194702934861,
+        "recall": 0.9532080822403403,
+        "f1-score": 0.9577916295636687,
+        "support": 2821.0
+      },
+      "accuracy": 0.9751598364951263,
+      "macro avg": {
+        "precision": 0.9714276097576813,
+        "recall": 0.9687915411201702,
+        "f1-score": 0.9700965276354766,
+        "support": 9541.0
+      },
+      "weighted avg": {
+        "precision": 0.9751088523707089,
+        "recall": 0.9751598364951263,
+        "f1-score": 0.97512501496196,
+        "support": 9541.0
+      }
+    },
+    "top_hoax_features": [
+      [
+        "yg",
+        16.72
+      ],
+      [
+        "artikel",
+        11.87
+      ],
+      [
+        "jelas",
+        11.51
+      ],
+      [
+        "foto",
+        9.34
+      ],
+      [
+        "sumber",
+        9.3
+      ],
+      [
+        "video",
+        7.95
+      ],
+      [
+        "info",
+        7.53
+      ],
+      [
+        "berita",
+        7.53
+      ],
+      [
+        "postingan",
+        7.36
+      ],
+      [
+        "judul",
+        7.2
+      ],
+      [
+        "hoax",
+        6.99
+      ],
+      [
+        "narasi",
+        6.98
+      ],
+      [
+        "breaking",
+        6.54
+      ],
+      [
+        "jkw",
+        6.53
+      ],
+      [
+        "terjemah",
+        6.52
+      ]
+    ],
+    "top_factual_features": [
+      [
+        "politik",
+        -17.98
+      ],
+      [
+        "sebut",
+        -13.78
+      ],
+      [
+        "selasa",
+        -9.74
+      ],
+      [
+        "persen",
+        -9.68
+      ],
+      [
+        "nurita",
+        -9.39
+      ],
+      [
+        "rabu",
+        -8.9
+      ],
+      [
+        "kamis",
+        -8.71
+      ],
+      [
+        "respons",
+        -8.64
+      ],
+      [
+        "terang",
+        -8.25
+      ],
+      [
+        "duga",
+        -7.81
+      ],
+      [
+        "lebaran",
+        -7.67
+      ],
+      [
+        "lihat video",
+        -7.61
+      ],
+      [
+        "senin",
+        -7.45
+      ],
+      [
+        "julnis",
+        -7.31
+      ],
+      [
+        "news klik",
+        -7.15
+      ]
+    ]
+  }
+}

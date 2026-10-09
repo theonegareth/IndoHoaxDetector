@@ -1,0 +1,72 @@
+{
+  "n_test": 12587,
+  "n_train": 50347,
+  "similarity": "TF-IDF (1-2 gram) cosine, exhaustive",
+  "thresholds": {
+    "0.95": {
+      "n": 51,
+      "pct": 0.405179947564948,
+      "n_cross_label": 0
+    },
+    "0.9": {
+      "n": 104,
+      "pct": 0.8262493048383254,
+      "n_cross_label": 0
+    },
+    "0.8": {
+      "n": 307,
+      "pct": 2.4390243902439024,
+      "n_cross_label": 0
+    },
+    "0.7": {
+      "n": 689,
+      "pct": 5.473901644553905,
+      "n_cross_label": 1
+    },
+    "0.5": {
+      "n": 2611,
+      "pct": 20.743624374354493,
+      "n_cross_label": 6
+    }
+  },
+  "median_nearest_cosine": 0.3365095033022744,
+  "jaccard3_ge_0.8": {
+    "n": 49,
+    "pct": 0.3892905378565186
+  },
+  "jaccard3_ge_0.5": {
+    "n": 238,
+    "pct": 1.8908397553030907
+  },
+  "decontaminated": {
+    "threshold_cosine": 0.8,
+    "n_kept": 12280,
+    "models": {
+      "Logistic Regression": {
+        "macro_f1_full": 0.9761344400970967,
+        "macro_f1_decontaminated": 0.9757230497852476,
+        "accuracy_decontaminated": 0.975814332247557
+      },
+      "SVM": {
+        "macro_f1_full": 0.9760548825819864,
+        "macro_f1_decontaminated": 0.975641553232123,
+        "accuracy_decontaminated": 0.9757328990228012
+      },
+      "Naive Bayes": {
+        "macro_f1_full": 0.9298358855627861,
+        "macro_f1_decontaminated": 0.929556154663792,
+        "accuracy_decontaminated": 0.9300488599348534
+      },
+      "Random Forest": {
+        "macro_f1_full": 0.9648252908403794,
+        "macro_f1_decontaminated": 0.9639765106158997,
+        "accuracy_decontaminated": 0.9640879478827361
+      },
+      "IndoBERT": {
+        "macro_f1_full": 0.9974455186376479,
+        "macro_f1_decontaminated": 0.9973840642380518,
+        "accuracy_decontaminated": 0.9973941368078176
+      }
+    }
+  }
+}

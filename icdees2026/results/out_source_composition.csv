@@ -1,0 +1,10 @@
+source_key,outlet,genre,origin_dataset,n,pct,label,n_factual,n_hoax,mean_tokens,median_tokens,max_tokens,mean_raw_chars,max_raw_chars
+komdigi_hoaks,Komdigi (Kominfo),government,Indonesian Hoax News Dataset,15273,24.250940789787073,hoax,0,15273,75.95036993387023,73.0,294,997.996464348851,4264
+turnbackhoax_cleaned,TurnBackHoax.id,fact-check,Deteksi Berita Hoaks Indo,12572,19.9622096254307,hoax,0,12572,45.88880050906777,26.0,2319,428.2238307349666,16127
+cnn_10k_cleaned,CNN Indonesia,news,Indonesian Fact and Hoax Political News,9630,15.290811222788548,factual,9630,0,171.0742471443406,160.0,742,2065.7179646936656,8884
+tempo_6k_cleaned,Tempo.co,news,Indonesian Fact and Hoax Political News,6592,10.46698105717779,factual,6592,0,72.99469053398059,55.0,538,780.9434162621359,5007
+kompas_4k_cleaned,Kompas.com,news,Indonesian Fact and Hoax Political News,4729,7.508852157068229,factual,4729,0,158.3218439416367,142.0,1648,1931.8828504969338,24416
+kompas_cleaned,Kompas.com,news,Deteksi Berita Hoaks Indo,4216,6.694294923704727,factual,4216,0,60.59653700189753,56.0,380,626.240275142315,5038
+cnn_cleaned,CNN Indonesia,news,Deteksi Berita Hoaks Indo,4216,6.694294923704727,factual,4216,0,181.1280834914611,163.0,1443,2122.235294117647,18290
+detik_cleaned,Detik.com,news,Deteksi Berita Hoaks Indo,4214,6.6911192619762145,factual,4214,0,190.7123872804936,166.0,2211,2295.0104413858567,29140
+turnbackhoax_10k_cleaned,TurnBackHoax.id,fact-check,Indonesian Fact and Hoax Political News,1537,2.4404960383619936,hoax,0,1537,157.50292778139232,90.0,2430,1915.1795705920624,32491

@@ -1,0 +1,99 @@
+{
+  "seed": 42,
+  "corpus": "deleaked2_preproc.csv (sanitised)",
+  "model": "indobenchmark/indobert-base-p1",
+  "max_length": 128,
+  "batch_size": 16,
+  "epochs": 3,
+  "learning_rate": 1e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "scheduler": "linear",
+  "optimizer": "adamw_torch",
+  "early_stopping": "load_best_model_at_end on validation weighted F1",
+  "device": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "n_train": 45312,
+  "n_val": 5035,
+  "n_test": 12587,
+  "tokenisation_time_s": 6.9,
+  "training_time_s": 1933.4,
+  "accuracy": 0.9906252482720267,
+  "precision_weighted": 0.9906275063317732,
+  "recall_weighted": 0.9906252482720267,
+  "f1_weighted": 0.9906257493384419,
+  "per_class": {
+    "factual": {
+      "precision": 0.9919523099850969,
+      "recall": 0.9904761904761905,
+      "f1-score": 0.9912137006701415,
+      "support": 6720.0
+    },
+    "hoax": {
+      "precision": 0.9891100901820656,
+      "recall": 0.9907959775012783,
+      "f1-score": 0.9899523160762943,
+      "support": 5867.0
+    },
+    "accuracy": 0.9906252482720267,
+    "macro avg": {
+      "precision": 0.9905312000835813,
+      "recall": 0.9906360839887345,
+      "f1-score": 0.9905830083732179,
+      "support": 12587.0
+    },
+    "weighted avg": {
+      "precision": 0.9906275063317732,
+      "recall": 0.9906252482720267,
+      "f1-score": 0.9906257493384419,
+      "support": 12587.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      6656,
+      64
+    ],
+    [
+      54,
+      5813
+    ]
+  ],
+  "per_source_accuracy": {
+    "cnn_10k_cleaned": {
+      "n": 1880,
+      "accuracy": 0.9984042553191489
+    },
+    "cnn_cleaned": {
+      "n": 843,
+      "accuracy": 0.9905100830367735
+    },
+    "detik_cleaned": {
+      "n": 808,
+      "accuracy": 0.9876237623762376
+    },
+    "komdigi_hoaks": {
+      "n": 3059,
+      "accuracy": 0.996730957829356
+    },
+    "kompas_4k_cleaned": {
+      "n": 989,
+      "accuracy": 0.9908998988877654
+    },
+    "kompas_cleaned": {
+      "n": 818,
+      "accuracy": 0.9816625916870416
+    },
+    "tempo_6k_cleaned": {
+      "n": 1382,
+      "accuracy": 0.9862518089725036
+    },
+    "turnbackhoax_10k_cleaned": {
+      "n": 316,
+      "accuracy": 0.9272151898734177
+    },
+    "turnbackhoax_cleaned": {
+      "n": 2492,
+      "accuracy": 0.9915730337078652
+    }
+  }
+}

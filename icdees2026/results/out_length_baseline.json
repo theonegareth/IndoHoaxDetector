@@ -1,0 +1,14 @@
+{
+  "original": {
+    "accuracy": 0.6893458240711337,
+    "f1_weighted": 0.6880983365361562,
+    "mean_tokens_factual": 139.89650861684078,
+    "mean_tokens_hoax": 67.35368593016132
+  },
+  "sanitised": {
+    "accuracy": 0.7950266147612616,
+    "f1_weighted": 0.7950607495927998,
+    "mean_tokens_factual": 137.38384379557698,
+    "mean_tokens_hoax": 43.142686709615845
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "tag": "indobert_minimal",
+  "model": "indobenchmark/indobert-base-p1",
+  "seed": 42,
+  "text_variant": "minimal",
+  "max_length": 128,
+  "batch_size": 16,
+  "epochs": 3,
+  "learning_rate": 1e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "scheduler": "linear",
+  "optimizer": "adamw_torch",
+  "fp16": true,
+  "early_stopping": "load_best_model_at_end on validation weighted F1",
+  "device": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "n_train": 45312,
+  "n_val": 5035,
+  "n_test": 12587,
+  "tokenisation_time_s": 7.6,
+  "training_time_s": 1987.2,
+  "accuracy": 0.9961070946214348,
+  "precision_weighted": 0.9961074164608013,
+  "recall_weighted": 0.9961070946214348,
+  "f1_weighted": 0.9961069460080216,
+  "per_class": {
+    "factual": {
+      "precision": 0.9958376690946931,
+      "recall": 0.996875,
+      "f1-score": 0.9963560645497137,
+      "support": 6720.0
+    },
+    "hoax": {
+      "precision": 0.9964163822525597,
+      "recall": 0.9952275438895517,
+      "f1-score": 0.9958216082544555,
+      "support": 5867.0
+    },
+    "accuracy": 0.9961070946214348,
+    "macro avg": {
+      "precision": 0.9961270256736263,
+      "recall": 0.9960512719447758,
+      "f1-score": 0.9960888364020846,
+      "support": 12587.0
+    },
+    "weighted avg": {
+      "precision": 0.9961074164608013,
+      "recall": 0.9961070946214348,
+      "f1-score": 0.9961069460080216,
+      "support": 12587.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      6699,
+      21
+    ],
+    [
+      28,
+      5839
+    ]
+  ],
+  "per_source_accuracy": {
+    "cnn_10k_cleaned": {
+      "n": 1880,
+      "accuracy": 1.0
+    },
+    "cnn_cleaned": {
+      "n": 843,
+      "accuracy": 0.99644128113879
+    },
+    "detik_cleaned": {
+      "n": 808,
+      "accuracy": 0.9925742574257426
+    },
+    "komdigi_hoaks": {
+      "n": 3059,
+      "accuracy": 0.9980385746976136
+    },
+    "kompas_4k_cleaned": {
+      "n": 989,
+      "accuracy": 0.9929221435793731
+    },
+    "kompas_cleaned": {
+      "n": 818,
+      "accuracy": 0.9975550122249389
+    },
+    "tempo_6k_cleaned": {
+      "n": 1382,
+      "accuracy": 0.9978292329956585
+    },
+    "turnbackhoax_10k_cleaned": {
+      "n": 316,
+      "accuracy": 0.9715189873417721
+    },
+    "turnbackhoax_cleaned": {
+      "n": 2492,
+      "accuracy": 0.9947833065810594
+    }
+  }
+}

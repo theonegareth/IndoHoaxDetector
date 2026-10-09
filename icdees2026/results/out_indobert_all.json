@@ -1,0 +1,142 @@
+{
+  "random_split": {
+    "n": 12596,
+    "accuracy": 0.9986503651953001,
+    "precision_weighted": 0.9986508830942749,
+    "recall_weighted": 0.9986503651953001,
+    "f1_weighted": 0.9986503142897138,
+    "per_class": {
+      "factual": {
+        "precision": 0.9982161438977256,
+        "recall": 0.9992559523809523,
+        "f1-score": 0.9987357774968394,
+        "support": 6720.0
+      },
+      "hoax": {
+        "precision": 0.9991480661100699,
+        "recall": 0.9979577944179714,
+        "f1-score": 0.9985525755640698,
+        "support": 5876.0
+      },
+      "accuracy": 0.9986503651953001,
+      "macro avg": {
+        "precision": 0.9986821050038978,
+        "recall": 0.9986068733994619,
+        "f1-score": 0.9986441765304546,
+        "support": 12596.0
+      },
+      "weighted avg": {
+        "precision": 0.9986508830942749,
+        "recall": 0.9986503651953001,
+        "f1-score": 0.9986503142897138,
+        "support": 12596.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        6715,
+        5
+      ],
+      [
+        12,
+        5864
+      ]
+    ],
+    "per_source_accuracy": {
+      "cnn_10k_cleaned": {
+        "n": 1880,
+        "accuracy": 1.0
+      },
+      "cnn_cleaned": {
+        "n": 843,
+        "accuracy": 0.9976275207591934
+      },
+      "detik_cleaned": {
+        "n": 808,
+        "accuracy": 1.0
+      },
+      "komdigi_hoaks": {
+        "n": 3069,
+        "accuracy": 1.0
+      },
+      "kompas_4k_cleaned": {
+        "n": 989,
+        "accuracy": 1.0
+      },
+      "kompas_cleaned": {
+        "n": 818,
+        "accuracy": 0.9987775061124694
+      },
+      "tempo_6k_cleaned": {
+        "n": 1382,
+        "accuracy": 0.9985528219971056
+      },
+      "turnbackhoax_10k_cleaned": {
+        "n": 316,
+        "accuracy": 0.9936708860759493
+      },
+      "turnbackhoax_cleaned": {
+        "n": 2491,
+        "accuracy": 0.9959855479727018
+      }
+    }
+  },
+  "cross_source": {
+    "n": 26079,
+    "accuracy": 0.9996548947428966,
+    "precision_weighted": 0.9996550979850974,
+    "recall_weighted": 0.9996548947428966,
+    "f1_weighted": 0.9996548736814689,
+    "per_class": {
+      "factual": {
+        "precision": 1.0,
+        "recall": 0.9991671293725708,
+        "f1-score": 0.9995833911956673,
+        "support": 10806.0
+      },
+      "hoax": {
+        "precision": 0.9994110718492344,
+        "recall": 1.0,
+        "f1-score": 0.9997054491899853,
+        "support": 15273.0
+      },
+      "accuracy": 0.9996548947428966,
+      "macro avg": {
+        "precision": 0.9997055359246172,
+        "recall": 0.9995835646862854,
+        "f1-score": 0.9996444201928263,
+        "support": 26079.0
+      },
+      "weighted avg": {
+        "precision": 0.9996550979850974,
+        "recall": 0.9996548947428966,
+        "f1-score": 0.9996548736814689,
+        "support": 26079.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        10797,
+        9
+      ],
+      [
+        0,
+        15273
+      ]
+    ],
+    "per_source_accuracy": {
+      "detik_cleaned": {
+        "n": 4214,
+        "accuracy": 0.9997626957759849
+      },
+      "tempo_6k_cleaned": {
+        "n": 6592,
+        "accuracy": 0.9987864077669902
+      },
+      "komdigi_hoaks": {
+        "n": 15273,
+        "accuracy": 1.0
+      }
+    }
+  }
+}

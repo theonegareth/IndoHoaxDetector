@@ -1,0 +1,184 @@
+{
+  "A_random": {
+    "n": 12587,
+    "accuracy": 0.9754508620004767,
+    "f1_weighted": 0.9754515219843604,
+    "confusion_matrix": [
+      [
+        6563,
+        157
+      ],
+      [
+        152,
+        5715
+      ]
+    ],
+    "per_class": {
+      "factual": {
+        "precision": 0.9773641102010424,
+        "recall": 0.9766369047619048,
+        "f1-score": 0.9770003721622628,
+        "support": 6720.0
+      },
+      "hoax": {
+        "precision": 0.9732629427792916,
+        "recall": 0.9740923811147094,
+        "f1-score": 0.9736774853053923,
+        "support": 5867.0
+      },
+      "accuracy": 0.9754508620004767,
+      "macro avg": {
+        "precision": 0.975313526490167,
+        "recall": 0.9753646429383072,
+        "f1-score": 0.9753389287338275,
+        "support": 12587.0
+      },
+      "weighted avg": {
+        "precision": 0.975452491128713,
+        "recall": 0.9754508620004767,
+        "f1-score": 0.9754515219843604,
+        "support": 12587.0
+      }
+    }
+  },
+  "B_cross_source": {
+    "n": 26038,
+    "accuracy": 0.884898993778324,
+    "f1_weighted": 0.8842412616457308,
+    "confusion_matrix": [
+      [
+        8946,
+        1860
+      ],
+      [
+        1137,
+        14095
+      ]
+    ],
+    "per_class": {
+      "factual": {
+        "precision": 0.8872359416840226,
+        "recall": 0.8278734036646308,
+        "f1-score": 0.8565273588970271,
+        "support": 10806.0
+      },
+      "hoax": {
+        "precision": 0.8834221247257913,
+        "recall": 0.9253545168067226,
+        "f1-score": 0.9039022669702119,
+        "support": 15232.0
+      },
+      "accuracy": 0.884898993778324,
+      "macro avg": {
+        "precision": 0.885329033204907,
+        "recall": 0.8766139602356767,
+        "f1-score": 0.8802148129336196,
+        "support": 26038.0
+      },
+      "weighted avg": {
+        "precision": 0.885004892451832,
+        "recall": 0.884898993778324,
+        "f1-score": 0.8842412616457308,
+        "support": 26038.0
+      }
+    },
+    "train_sources": [
+      "cnn_10k_cleaned",
+      "cnn_cleaned",
+      "kompas_4k_cleaned",
+      "kompas_cleaned",
+      "turnbackhoax_cleaned",
+      "turnbackhoax_10k_cleaned"
+    ],
+    "test_sources": [
+      "detik_cleaned",
+      "tempo_6k_cleaned",
+      "komdigi_hoaks"
+    ],
+    "per_source": {
+      "detik_cleaned": {
+        "n": 4214,
+        "label": 0,
+        "accuracy": 0.9755576649264357
+      },
+      "tempo_6k_cleaned": {
+        "n": 6592,
+        "label": 0,
+        "accuracy": 0.7334648058252428
+      },
+      "komdigi_hoaks": {
+        "n": 15232,
+        "label": 1,
+        "accuracy": 0.9253545168067226
+      }
+    }
+  },
+  "C_leave_one_source_out": {
+    "cnn_10k_cleaned": {
+      "label": 0,
+      "n": 9630,
+      "recall_when_unseen": 0.9836967808930426,
+      "recall_in_distribution": 0.9965
+    },
+    "cnn_cleaned": {
+      "label": 0,
+      "n": 4216,
+      "recall_when_unseen": 0.8735768500948766,
+      "recall_in_distribution": 0.991
+    },
+    "detik_cleaned": {
+      "label": 0,
+      "n": 4214,
+      "recall_when_unseen": 0.9667774086378738,
+      "recall_in_distribution": 0.996
+    },
+    "komdigi_hoaks": {
+      "label": 1,
+      "n": 15232,
+      "recall_when_unseen": 0.9029017857142857,
+      "recall_in_distribution": 0.9955
+    },
+    "kompas_4k_cleaned": {
+      "label": 0,
+      "n": 4729,
+      "recall_when_unseen": 0.9399450200888138,
+      "recall_in_distribution": 0.9925
+    },
+    "kompas_cleaned": {
+      "label": 0,
+      "n": 4216,
+      "recall_when_unseen": 0.8688330170777988,
+      "recall_in_distribution": 0.9935
+    },
+    "tempo_6k_cleaned": {
+      "label": 0,
+      "n": 6592,
+      "recall_when_unseen": 0.7044902912621359,
+      "recall_in_distribution": 0.98
+    },
+    "turnbackhoax_10k_cleaned": {
+      "label": 1,
+      "n": 1536,
+      "recall_when_unseen": 0.8046875,
+      "recall_in_distribution": 0.9401041666666666
+    },
+    "turnbackhoax_cleaned": {
+      "label": 1,
+      "n": 12569,
+      "recall_when_unseen": 0.8571087596467499,
+      "recall_in_distribution": 0.9905
+    }
+  },
+  "D_xcom_transfer": {
+    "overall_hoax_rate": 0.6344771738030165,
+    "kompascom": {
+      "n": 4934,
+      "hoax_rate": 0.5301986218078638
+    },
+    "VIVAcoid": {
+      "n": 4945,
+      "hoax_rate": 0.7385237613751264
+    },
+    "length_matched_control_hoax_rate": 0.369
+  }
+}

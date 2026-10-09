@@ -1,0 +1,244 @@
+{
+  "temporal": {
+    "cutoff": 202301,
+    "n_train": 20364,
+    "n_test": 16230,
+    "accuracy": 0.7634627233518176,
+    "f1_weighted": 0.7639898290357421,
+    "confusion_matrix": [
+      [
+        6292,
+        3440
+      ],
+      [
+        399,
+        6099
+      ]
+    ],
+    "per_class": {
+      "factual": {
+        "precision": 0.9403676580481244,
+        "recall": 0.6465269214960954,
+        "f1-score": 0.7662424648359009,
+        "support": 9732.0
+      },
+      "hoax": {
+        "precision": 0.6393751965614844,
+        "recall": 0.9385964912280702,
+        "f1-score": 0.7606160753258091,
+        "support": 6498.0
+      },
+      "accuracy": 0.7634627233518176,
+      "macro avg": {
+        "precision": 0.7898714273048044,
+        "recall": 0.7925617063620828,
+        "f1-score": 0.7634292700808549,
+        "support": 16230.0
+      },
+      "weighted avg": {
+        "precision": 0.8198594008244531,
+        "recall": 0.7634627233518176,
+        "f1-score": 0.7639898290357421,
+        "support": 16230.0
+      }
+    }
+  },
+  "random_control_same_subset": {
+    "n_train": 20364,
+    "n_test": 16230,
+    "accuracy": 0.9772643253234751,
+    "f1_weighted": 0.9772495745942374
+  },
+  "per_source": {
+    "Logistic Regression": {
+      "cnn_10k_cleaned": {
+        "n": 1880,
+        "accuracy": 0.9952127659574468
+      },
+      "cnn_cleaned": {
+        "n": 843,
+        "accuracy": 0.9774614472123369
+      },
+      "detik_cleaned": {
+        "n": 808,
+        "accuracy": 0.9851485148514851
+      },
+      "komdigi_hoaks": {
+        "n": 3059,
+        "accuracy": 0.9833278849297156
+      },
+      "kompas_4k_cleaned": {
+        "n": 989,
+        "accuracy": 0.9777553083923155
+      },
+      "kompas_cleaned": {
+        "n": 818,
+        "accuracy": 0.9779951100244498
+      },
+      "tempo_6k_cleaned": {
+        "n": 1382,
+        "accuracy": 0.951519536903039
+      },
+      "turnbackhoax_10k_cleaned": {
+        "n": 316,
+        "accuracy": 0.8860759493670886
+      },
+      "turnbackhoax_cleaned": {
+        "n": 2492,
+        "accuracy": 0.973916532905297
+      }
+    },
+    "SVM": {
+      "cnn_10k_cleaned": {
+        "n": 1880,
+        "accuracy": 0.9941489361702127
+      },
+      "cnn_cleaned": {
+        "n": 843,
+        "accuracy": 0.9750889679715302
+      },
+      "detik_cleaned": {
+        "n": 808,
+        "accuracy": 0.9863861386138614
+      },
+      "komdigi_hoaks": {
+        "n": 3059,
+        "accuracy": 0.9830009807126512
+      },
+      "kompas_4k_cleaned": {
+        "n": 989,
+        "accuracy": 0.9797775530839231
+      },
+      "kompas_cleaned": {
+        "n": 818,
+        "accuracy": 0.9792176039119804
+      },
+      "tempo_6k_cleaned": {
+        "n": 1382,
+        "accuracy": 0.9507959479015919
+      },
+      "turnbackhoax_10k_cleaned": {
+        "n": 316,
+        "accuracy": 0.8892405063291139
+      },
+      "turnbackhoax_cleaned": {
+        "n": 2492,
+        "accuracy": 0.973916532905297
+      }
+    },
+    "Naive Bayes": {
+      "cnn_10k_cleaned": {
+        "n": 1880,
+        "accuracy": 0.9861702127659574
+      },
+      "cnn_cleaned": {
+        "n": 843,
+        "accuracy": 0.8849347568208779
+      },
+      "detik_cleaned": {
+        "n": 808,
+        "accuracy": 0.9108910891089109
+      },
+      "komdigi_hoaks": {
+        "n": 3059,
+        "accuracy": 0.9153318077803204
+      },
+      "kompas_4k_cleaned": {
+        "n": 989,
+        "accuracy": 0.9635995955510617
+      },
+      "kompas_cleaned": {
+        "n": 818,
+        "accuracy": 0.9523227383863081
+      },
+      "tempo_6k_cleaned": {
+        "n": 1382,
+        "accuracy": 0.9797395079594791
+      },
+      "turnbackhoax_10k_cleaned": {
+        "n": 316,
+        "accuracy": 0.870253164556962
+      },
+      "turnbackhoax_cleaned": {
+        "n": 2492,
+        "accuracy": 0.8884430176565008
+      }
+    },
+    "Random Forest": {
+      "cnn_10k_cleaned": {
+        "n": 1880,
+        "accuracy": 0.9984042553191489
+      },
+      "cnn_cleaned": {
+        "n": 843,
+        "accuracy": 0.9750889679715302
+      },
+      "detik_cleaned": {
+        "n": 808,
+        "accuracy": 0.9925742574257426
+      },
+      "komdigi_hoaks": {
+        "n": 3059,
+        "accuracy": 0.9865969271003596
+      },
+      "kompas_4k_cleaned": {
+        "n": 989,
+        "accuracy": 0.9777553083923155
+      },
+      "kompas_cleaned": {
+        "n": 818,
+        "accuracy": 0.9559902200488998
+      },
+      "tempo_6k_cleaned": {
+        "n": 1382,
+        "accuracy": 0.8813314037626628
+      },
+      "turnbackhoax_10k_cleaned": {
+        "n": 316,
+        "accuracy": 0.7531645569620253
+      },
+      "turnbackhoax_cleaned": {
+        "n": 2492,
+        "accuracy": 0.9719101123595506
+      }
+    },
+    "IndoBERT": {
+      "cnn_10k_cleaned": {
+        "n": 1880,
+        "accuracy": 1.0
+      },
+      "cnn_cleaned": {
+        "n": 843,
+        "accuracy": 0.99644128113879
+      },
+      "detik_cleaned": {
+        "n": 808,
+        "accuracy": 0.9925742574257426
+      },
+      "komdigi_hoaks": {
+        "n": 3059,
+        "accuracy": 0.9980385746976136
+      },
+      "kompas_4k_cleaned": {
+        "n": 989,
+        "accuracy": 0.9929221435793731
+      },
+      "kompas_cleaned": {
+        "n": 818,
+        "accuracy": 0.9975550122249389
+      },
+      "tempo_6k_cleaned": {
+        "n": 1382,
+        "accuracy": 0.9978292329956585
+      },
+      "turnbackhoax_10k_cleaned": {
+        "n": 316,
+        "accuracy": 0.9715189873417721
+      },
+      "turnbackhoax_cleaned": {
+        "n": 2492,
+        "accuracy": 0.9947833065810594
+      }
+    }
+  }
+}

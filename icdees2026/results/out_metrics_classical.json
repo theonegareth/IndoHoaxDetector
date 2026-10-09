@@ -1,0 +1,166 @@
+{
+  "Logistic Regression": {
+    "config": "TF-IDF 10000 (1, 3)-grams, C=10",
+    "svm_kernel": null,
+    "accuracy": 0.9762453324858982,
+    "precision_weighted": 0.9762443495133369,
+    "recall_weighted": 0.9762453324858982,
+    "f1_weighted": 0.9762446862598563,
+    "f1_macro": 0.9761344400970967,
+    "balanced_accuracy": 0.9761086905573547,
+    "roc_auc": 0.9966782782228283,
+    "ci95_accuracy": [
+      0.9736235798840073,
+      0.978867085087789
+    ],
+    "ci95_f1_macro": [
+      0.9733738909717843,
+      0.978774614183835
+    ],
+    "ci95_roc_auc": [
+      0.9960174505777865,
+      0.9973014160823298
+    ],
+    "confusion_matrix": [
+      [
+        6573,
+        147
+      ],
+      [
+        152,
+        5715
+      ]
+    ],
+    "train_time_s": 22.127512000000024,
+    "vectorise_time_s": 21.963140199999998,
+    "fit_time_s": 0.16437180000002627,
+    "inference_time_s_test_set": 1.6191162000000077,
+    "n_test": 12587,
+    "inference_ms_per_doc": 0.12863400333677666,
+    "model_size_mb": 0.477219,
+    "peak_python_memory_train_mb": 1305.999463
+  },
+  "SVM": {
+    "config": "TF-IDF 10000 (1, 3)-grams, C=1",
+    "svm_kernel": "linear (LinearSVC, liblinear)",
+    "accuracy": 0.976165885437356,
+    "precision_weighted": 0.9761650472844288,
+    "recall_weighted": 0.976165885437356,
+    "f1_weighted": 0.976165367337681,
+    "f1_macro": 0.9760548825819864,
+    "balanced_accuracy": 0.9760342857954499,
+    "roc_auc": 0.996757185062537,
+    "ci95_accuracy": [
+      0.9735441328354651,
+      0.9787896242154603
+    ],
+    "ci95_f1_macro": [
+      0.9733777632112308,
+      0.9787587887030986
+    ],
+    "ci95_roc_auc": [
+      0.9961075651672613,
+      0.9973450158527861
+    ],
+    "confusion_matrix": [
+      [
+        6572,
+        148
+      ],
+      [
+        152,
+        5715
+      ]
+    ],
+    "train_time_s": 23.511439599999903,
+    "vectorise_time_s": 23.006911599999967,
+    "fit_time_s": 0.5045279999999366,
+    "inference_time_s_test_set": 1.804933900000151,
+    "n_test": 12587,
+    "inference_ms_per_doc": 0.14339667116867807,
+    "model_size_mb": 0.477103,
+    "peak_python_memory_train_mb": 1305.999255
+  },
+  "Naive Bayes": {
+    "config": "TF-IDF 10000 (1, 2)-grams, alpha=0.01",
+    "svm_kernel": null,
+    "accuracy": 0.9304043854770795,
+    "precision_weighted": 0.9310546858052668,
+    "recall_weighted": 0.9304043854770795,
+    "f1_weighted": 0.9302638912352419,
+    "f1_macro": 0.9298358855627861,
+    "balanced_accuracy": 0.9285688160981114,
+    "roc_auc": 0.9829548290681538,
+    "ci95_accuracy": [
+      0.9262711527766744,
+      0.9350123142925241
+    ],
+    "ci95_f1_macro": [
+      0.9253593294512518,
+      0.9343002375719996
+    ],
+    "ci95_roc_auc": [
+      0.9812039171570714,
+      0.9845459850989864
+    ],
+    "confusion_matrix": [
+      [
+        6422,
+        298
+      ],
+      [
+        578,
+        5289
+      ]
+    ],
+    "train_time_s": 10.020326099999693,
+    "vectorise_time_s": 10.00681829999985,
+    "fit_time_s": 0.013507799999842973,
+    "inference_time_s_test_set": 1.1950400999999147,
+    "n_test": 12587,
+    "inference_ms_per_doc": 0.09494240883450501,
+    "model_size_mb": 0.708733,
+    "peak_python_memory_train_mb": 554.387379
+  },
+  "Random Forest": {
+    "config": "TF-IDF 10000 (1, 2)-grams, n=200",
+    "svm_kernel": null,
+    "accuracy": 0.9649638515929133,
+    "precision_weighted": 0.9650344475147554,
+    "recall_weighted": 0.9649638515929133,
+    "f1_weighted": 0.9649749013744445,
+    "f1_macro": 0.9648252908403794,
+    "balanced_accuracy": 0.965142960627237,
+    "roc_auc": 0.993502474494144,
+    "ci95_accuracy": [
+      0.9617839834750139,
+      0.9681417335345992
+    ],
+    "ci95_f1_macro": [
+      0.9616333006094411,
+      0.9679962686576656
+    ],
+    "ci95_roc_auc": [
+      0.99251786032476,
+      0.9944236669580055
+    ],
+    "confusion_matrix": [
+      [
+        6468,
+        252
+      ],
+      [
+        189,
+        5678
+      ]
+    ],
+    "train_time_s": 30.066905899999938,
+    "vectorise_time_s": 9.74647959999993,
+    "fit_time_s": 20.32042630000001,
+    "inference_time_s_test_set": 1.2911930000000211,
+    "n_test": 12587,
+    "inference_ms_per_doc": 0.10258147294828165,
+    "model_size_mb": 156.310686,
+    "peak_python_memory_train_mb": 554.388587
+  }
+}
