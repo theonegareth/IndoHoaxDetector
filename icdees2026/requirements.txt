@@ -1,0 +1,11 @@
+numpy>=2.0
+pandas>=2.2
+scikit-learn>=1.7
+torch==2.6.0
+transformers==4.57.1
+accelerate>=1.0
+Sastrawi>=1.0.1
+matplotlib>=3.8
+scipy>=1.13
+datasets>=2.19
+nltk>=3.8
