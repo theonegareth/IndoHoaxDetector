@@ -1,0 +1,24 @@
+{
+  "tag": "lr3e5",
+  "split": "random",
+  "seed": 42,
+  "lr": 3e-05,
+  "model": "indobenchmark/indobert-base-p1",
+  "device": "NVIDIA GeForce RTX 4090",
+  "n_train": 45312,
+  "n_val": 5035,
+  "n_test": 12587,
+  "val_f1_weighted_best": 0.9966234964681135,
+  "accuracy": 0.9965837769126877,
+  "f1_weighted": 0.9965838687551052,
+  "f1_macro": 0.996568200438688,
+  "balanced_accuracy": 0.996595059533955,
+  "roc_auc": 0.9998583050273118,
+  "recall_factual": 0.9964285714285714,
+  "recall_hoax": 0.9967615476393387,
+  "train_time_s": 350.75816202163696,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.1"
+  }
+}

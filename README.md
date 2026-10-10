@@ -20,6 +20,11 @@ datasets concatenated with `text`, `title`, `label`, `source` and `url` columns.
 | Corpus statistics | `dataset_stats.py` | `out_dataset_stats*.json` |
 | Tune classical models (5-fold CV) | `classical_sanitised.py` | `out_classical_sanitised.json` |
 | Extend the edge grid values | `grid_edge_check.py` | `out_grid_edge_check.json` |
+| Export the exact splits for GPU runs | `make_splits.py` | `splits.npz`, `pod_corpus.csv.gz` |
+| IndoBERT on every split (RunPod, 3 × RTX 4090) | `pod/runpod_launch.py`, `pod/train_split.py` | `out_pod_*.json`, `out_pod_*.npz` |
+| Summarise those runs | `pod_analysis.py` | `out_extra_ib.json` |
+| External benchmark (Pratiwi et al., 2017) | `external_eval.py` | `out_external_pratiwi2017.json`, `out_external_within_cv.json` |
+| Measured CPU energy (needs LibreHardwareMonitor) | `energy_classical.py` | `out_energy_classical.json` |
 | Metrics, CIs, efficiency | `metrics_classical.py` | `out_metrics_classical.json` |
 | IndoBERT, seeds 42, 1, 2 | `train_ib_final.py SEED` | `out_ib_final_seed*.json` |
 | IndoBERT, publisher-disjoint | `train_ib_final.py 42 xsource` | `out_ib_final_seed42_xsource.json` |
@@ -31,7 +36,11 @@ datasets concatenated with `text`, `title`, `label`, `source` and `url` columns.
 | Error analysis | `error_analysis.py` | `out_error_analysis.json` |
 | Figures | `figures.py` | `fig*.png`, `fig*.pdf` |
 
-`icdees2026/results/` holds the JSON and CSV outputs reported in the paper.
+`icdees2026/results/` holds the JSON and CSV outputs reported in the paper. `out_ib_error_reading.json` records the manual reading of every IndoBERT test error.
+
+The external benchmark is the Indonesian Hoax News Detection Dataset of Pratiwi et al. (Mendeley
+Data, doi:10.17632/p3hfgr5j3m.1, CC BY 4.0). It is not redistributed here: download it and unzip it
+to `external/mendeley/` before running `external_eval.py`.
 
 ## Setup
 

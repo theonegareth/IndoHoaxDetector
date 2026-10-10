@@ -1,0 +1,24 @@
+{
+  "tag": "enc_xlmr",
+  "split": "random",
+  "seed": 42,
+  "lr": 1e-05,
+  "model": "FacebookAI/xlm-roberta-base",
+  "device": "NVIDIA GeForce RTX 4090",
+  "n_train": 45312,
+  "n_val": 5035,
+  "n_test": 12587,
+  "val_f1_weighted_best": 0.997219156047246,
+  "accuracy": 0.997298800349567,
+  "f1_weighted": 0.9972987120651537,
+  "f1_macro": 0.9972861609644074,
+  "balanced_accuracy": 0.997253884722459,
+  "roc_auc": 0.9999122411875949,
+  "recall_factual": 0.9979166666666667,
+  "recall_hoax": 0.9965911027782512,
+  "train_time_s": 521.8025159835815,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.1"
+  }
+}

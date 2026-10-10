@@ -1,0 +1,24 @@
+{
+  "tag": "loso_komdigi_hoaks",
+  "split": "loso_komdigi_hoaks",
+  "seed": 42,
+  "lr": 1e-05,
+  "model": "indobenchmark/indobert-base-p1",
+  "device": "NVIDIA GeForce RTX 4090",
+  "n_train": 42931,
+  "n_val": 4771,
+  "n_test": 15232,
+  "val_f1_weighted_best": 0.9966436321650405,
+  "accuracy": 0.8023240546218487,
+  "f1_weighted": 0.8903216406221542,
+  "f1_macro": null,
+  "balanced_accuracy": null,
+  "roc_auc": null,
+  "recall_factual": null,
+  "recall_hoax": 0.8023240546218487,
+  "train_time_s": 345.2207884788513,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.1"
+  }
+}

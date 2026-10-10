@@ -1,0 +1,8 @@
+enc_indobertweet random 42 1e-5 indolem/indobertweet-base-uncased
+enc_mbert random 42 1e-5 google-bert/bert-base-multilingual-cased
+enc_xlmr random 42 1e-5 FacebookAI/xlm-roberta-base
+topic topic 42 1e-5 indobenchmark/indobert-base-p1
+topic_ctl topic_ctl 42 1e-5 indobenchmark/indobert-base-p1
+time time 42 1e-5 indobenchmark/indobert-base-p1
+time_ctl time_ctl 42 1e-5 indobenchmark/indobert-base-p1
+loso_komdigi_hoaks loso_komdigi_hoaks 42 1e-5 indobenchmark/indobert-base-p1

@@ -1,0 +1,85 @@
+{
+  "dataset": "Pratiwi et al. 2017, Mendeley Data 10.17632/p3hfgr5j3m.1 (600 articles)",
+  "n": 600,
+  "hoax_share": 0.38,
+  "median_words": 268,
+  "overlap": {
+    "max_cos_ge_0.8": 3,
+    "max_cos_ge_0.5": 57,
+    "median_max_cos": 0.246644847722525
+  },
+  "models": {
+    "SVM": {
+      "all": {
+        "n": 600,
+        "accuracy": 0.4533333333333333,
+        "macro_f1": 0.4533333333333333,
+        "balanced_accuracy": 0.4810413129598189,
+        "roc_auc": 0.5015563101301641,
+        "recall_hoax": 0.5964912280701754,
+        "recall_valid": 0.3655913978494624,
+        "pred_hoax_rate": 0.62
+      },
+      "no_overlap": {
+        "n": 597,
+        "accuracy": 0.4556113902847571,
+        "macro_f1": 0.4556113902847571,
+        "balanced_accuracy": 0.4825274568535159,
+        "roc_auc": 0.5034469642942043,
+        "recall_hoax": 0.5964912280701754,
+        "recall_valid": 0.3685636856368564,
+        "pred_hoax_rate": 0.6180904522613065
+      }
+    },
+    "Logistic Regression": {
+      "all": {
+        "n": 600,
+        "accuracy": 0.46166666666666667,
+        "macro_f1": 0.46159338354387125,
+        "balanced_accuracy": 0.4869128466327108,
+        "roc_auc": 0.5039143557819279,
+        "recall_hoax": 0.5921052631578947,
+        "recall_valid": 0.3817204301075269,
+        "pred_hoax_rate": 0.6083333333333333
+      },
+      "no_overlap": {
+        "n": 597,
+        "accuracy": 0.4639865996649916,
+        "macro_f1": 0.4639128970703783,
+        "balanced_accuracy": 0.48846455569818853,
+        "roc_auc": 0.5055864593733657,
+        "recall_hoax": 0.5921052631578947,
+        "recall_valid": 0.38482384823848237,
+        "pred_hoax_rate": 0.6063651591289783
+      }
+    },
+    "IndoBERT": {
+      "all": {
+        "n": 600.0,
+        "accuracy": 0.45,
+        "macro_f1": 0.439798782338715,
+        "balanced_accuracy": 0.5052348613469156,
+        "roc_auc": 0.5012517292334779,
+        "recall_hoax": 0.7353801169590644,
+        "recall_valid": 0.2750896057347671,
+        "pred_hoax_rate": 0.7288888888888888
+      },
+      "no_overlap": {
+        "n": 597.0,
+        "accuracy": 0.4522613065326633,
+        "macro_f1": 0.4419923874657255,
+        "balanced_accuracy": 0.5063531117767318,
+        "roc_auc": 0.5036272365647633,
+        "recall_hoax": 0.7353801169590644,
+        "recall_valid": 0.27732610659439927,
+        "pred_hoax_rate": 0.7275265214963708
+      },
+      "sd_accuracy_all": 0.021666666666666667,
+      "per_seed_accuracy_all": [
+        0.4633333333333333,
+        0.46166666666666667,
+        0.425
+      ]
+    }
+  }
+}

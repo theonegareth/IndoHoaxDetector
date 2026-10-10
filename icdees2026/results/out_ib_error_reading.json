@@ -1,0 +1,249 @@
+{
+ "method": "manual reading of all IndoBERT seed-42 test errors (sanitised text)",
+ "summary": {
+  "n_errors": 32,
+  "missed_hoaxes": 24,
+  "false_alarms": 8,
+  "missed_by_category": {
+   "rebuttal_only": 9,
+   "too_little_text": 4,
+   "label_noise": 2,
+   "hoax_news_register": 4,
+   "hoax_viral_post": 5
+  },
+  "false_alarms_by_category": {
+   "label_noise": 1,
+   "news_about_rumour": 1,
+   "opinion_column": 1,
+   "feature_or_explainer": 4,
+   "truncated_news": 1
+  },
+  "missed_political": 10
+ },
+ "errors": [
+  {
+   "n": 1,
+   "doc": 8392,
+   "true": 0,
+   "category": "feature_or_explainer",
+   "political": false
+  },
+  {
+   "n": 2,
+   "doc": 58093,
+   "true": 1,
+   "category": "rebuttal_only",
+   "political": false
+  },
+  {
+   "n": 3,
+   "doc": 13410,
+   "true": 1,
+   "category": "rebuttal_only",
+   "political": true
+  },
+  {
+   "n": 4,
+   "doc": 62581,
+   "true": 1,
+   "category": "too_little_text",
+   "political": true
+  },
+  {
+   "n": 5,
+   "doc": 47087,
+   "true": 1,
+   "category": "hoax_news_register",
+   "political": true
+  },
+  {
+   "n": 6,
+   "doc": 58047,
+   "true": 1,
+   "category": "rebuttal_only",
+   "political": true
+  },
+  {
+   "n": 7,
+   "doc": 57662,
+   "true": 1,
+   "category": "rebuttal_only",
+   "political": false
+  },
+  {
+   "n": 8,
+   "doc": 47504,
+   "true": 1,
+   "category": "too_little_text",
+   "political": false
+  },
+  {
+   "n": 9,
+   "doc": 39157,
+   "true": 0,
+   "category": "feature_or_explainer",
+   "political": false
+  },
+  {
+   "n": 10,
+   "doc": 55689,
+   "true": 1,
+   "category": "rebuttal_only",
+   "political": false
+  },
+  {
+   "n": 11,
+   "doc": 47212,
+   "true": 1,
+   "category": "hoax_viral_post",
+   "political": true
+  },
+  {
+   "n": 12,
+   "doc": 3802,
+   "true": 0,
+   "category": "truncated_news",
+   "political": false
+  },
+  {
+   "n": 13,
+   "doc": 21134,
+   "true": 1,
+   "category": "hoax_news_register",
+   "political": false
+  },
+  {
+   "n": 14,
+   "doc": 43314,
+   "true": 0,
+   "category": "news_about_rumour",
+   "political": false
+  },
+  {
+   "n": 15,
+   "doc": 13304,
+   "true": 1,
+   "category": "hoax_viral_post",
+   "political": true
+  },
+  {
+   "n": 16,
+   "doc": 20225,
+   "true": 1,
+   "category": "too_little_text",
+   "political": true
+  },
+  {
+   "n": 17,
+   "doc": 36854,
+   "true": 0,
+   "category": "opinion_column",
+   "political": false
+  },
+  {
+   "n": 18,
+   "doc": 17435,
+   "true": 1,
+   "category": "hoax_viral_post",
+   "political": false
+  },
+  {
+   "n": 19,
+   "doc": 47457,
+   "true": 1,
+   "category": "hoax_news_register",
+   "political": false
+  },
+  {
+   "n": 20,
+   "doc": 3255,
+   "true": 0,
+   "category": "feature_or_explainer",
+   "political": false
+  },
+  {
+   "n": 21,
+   "doc": 49777,
+   "true": 1,
+   "category": "rebuttal_only",
+   "political": false
+  },
+  {
+   "n": 22,
+   "doc": 14071,
+   "true": 1,
+   "category": "too_little_text",
+   "political": true
+  },
+  {
+   "n": 23,
+   "doc": 46346,
+   "true": 1,
+   "category": "hoax_news_register",
+   "political": false
+  },
+  {
+   "n": 24,
+   "doc": 56991,
+   "true": 1,
+   "category": "rebuttal_only",
+   "political": false
+  },
+  {
+   "n": 25,
+   "doc": 35361,
+   "true": 0,
+   "category": "label_noise",
+   "political": false
+  },
+  {
+   "n": 26,
+   "doc": 6171,
+   "true": 0,
+   "category": "feature_or_explainer",
+   "political": false
+  },
+  {
+   "n": 27,
+   "doc": 46230,
+   "true": 1,
+   "category": "label_noise",
+   "political": false
+  },
+  {
+   "n": 28,
+   "doc": 54620,
+   "true": 1,
+   "category": "rebuttal_only",
+   "political": false
+  },
+  {
+   "n": 29,
+   "doc": 51059,
+   "true": 1,
+   "category": "rebuttal_only",
+   "political": true
+  },
+  {
+   "n": 30,
+   "doc": 17038,
+   "true": 1,
+   "category": "hoax_viral_post",
+   "political": false
+  },
+  {
+   "n": 31,
+   "doc": 14092,
+   "true": 1,
+   "category": "hoax_viral_post",
+   "political": true
+  },
+  {
+   "n": 32,
+   "doc": 46315,
+   "true": 1,
+   "category": "label_noise",
+   "political": false
+  }
+ ]
+}

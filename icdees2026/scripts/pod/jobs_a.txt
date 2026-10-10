@@ -1,0 +1,8 @@
+lr1e5 random 42 1e-5 indobenchmark/indobert-base-p1
+lr2e5 random 42 2e-5 indobenchmark/indobert-base-p1
+lr3e5 random 42 3e-5 indobenchmark/indobert-base-p1
+lr5e5 random 42 5e-5 indobenchmark/indobert-base-p1
+xs_s1 xsource 1 1e-5 indobenchmark/indobert-base-p1
+xs_s2 xsource 2 1e-5 indobenchmark/indobert-base-p1
+loso_detik_cleaned loso_detik_cleaned 42 1e-5 indobenchmark/indobert-base-p1
+loso_tempo_6k_cleaned loso_tempo_6k_cleaned 42 1e-5 indobenchmark/indobert-base-p1

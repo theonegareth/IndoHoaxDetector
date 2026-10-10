@@ -1,0 +1,24 @@
+{
+  "tag": "enc_indobertweet",
+  "split": "random",
+  "seed": 42,
+  "lr": 1e-05,
+  "model": "indolem/indobertweet-base-uncased",
+  "device": "NVIDIA GeForce RTX 4090",
+  "n_train": 45312,
+  "n_val": 5035,
+  "n_test": 12587,
+  "val_f1_weighted_best": 0.9980138486871896,
+  "accuracy": 0.9968221180583141,
+  "f1_weighted": 0.9968220141942987,
+  "f1_macro": 0.9968072481934205,
+  "balanced_accuracy": 0.9967750031451135,
+  "roc_auc": 0.9998082114855488,
+  "recall_factual": 0.997470238095238,
+  "recall_hoax": 0.9960797681949889,
+  "train_time_s": 366.5098702907562,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.1"
+  }
+}

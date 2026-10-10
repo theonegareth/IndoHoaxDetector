@@ -1,0 +1,24 @@
+{
+  "tag": "enc_mbert",
+  "split": "random",
+  "seed": 42,
+  "lr": 1e-05,
+  "model": "google-bert/bert-base-multilingual-cased",
+  "device": "NVIDIA GeForce RTX 4090",
+  "n_train": 45312,
+  "n_val": 5035,
+  "n_test": 12587,
+  "val_f1_weighted_best": 0.996424829303601,
+  "accuracy": 0.9955509652816398,
+  "f1_weighted": 0.9955508685697005,
+  "f1_macro": 0.9955302447486375,
+  "balanced_accuracy": 0.9955088032741646,
+  "roc_auc": 0.9998838971202935,
+  "recall_factual": 0.9961309523809524,
+  "recall_hoax": 0.9948866541673769,
+  "train_time_s": 432.4355683326721,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.1"
+  }
+}
