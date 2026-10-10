@@ -9,7 +9,8 @@ import os, sys, json, time, subprocess, threading, urllib.request
 
 W = os.path.dirname(os.path.abspath(__file__)); RES = os.path.join(W, "pod_results"); os.makedirs(RES, exist_ok=True)
 LOG = open(os.path.join(W, "runpod_launch.log"), "a", buffering=1, encoding="utf-8")
-GPU, IMAGE, CAP_S = "NVIDIA GeForce RTX 4090", "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04", 2.4 * 3600
+GPU, IMAGE = "NVIDIA GeForce RTX 4090", "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
+CAP_S = float(os.environ.get("CAP_H", "2.4")) * 3600          # per-pod uptime cap; every pod is terminated at this point
 KEY = os.path.expanduser("~/.ssh/id_ed25519"); PUB = open(KEY + ".pub").read().strip()
 UPLOAD = ["train_split.py", "run_jobs.sh", "splits.npz", "pod_corpus.csv.gz"]
 
@@ -30,8 +31,13 @@ def ssh_args(ip, port):
     return ["-i", KEY, "-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null", "-o", "LogLevel=ERROR",
             "-o", "ConnectTimeout=15", "-o", "BatchMode=yes"] + (["-p", str(port)] if port else [])
 
-def sh(ip, port, c, t=120):
-    return subprocess.run(["ssh", *ssh_args(ip, port), "root@" + ip, c], capture_output=True, text=True, timeout=t)
+def sh(ip, port, c, t=120, tries=3):
+    for i in range(tries):                         # a busy host can stall one ssh call; retry before giving up
+        try:
+            return subprocess.run(["ssh", *ssh_args(ip, port), "root@" + ip, c], capture_output=True, text=True, timeout=t)
+        except subprocess.TimeoutExpired:
+            if i == tries - 1: raise
+            time.sleep(10)
 
 def pull(ip, port, x):
     d = os.path.join(RES, x); os.makedirs(d, exist_ok=True)

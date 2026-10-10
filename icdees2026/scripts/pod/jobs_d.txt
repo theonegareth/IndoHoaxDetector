@@ -1,0 +1,9 @@
+loso_cnn_10k_cleaned_s1 loso_cnn_10k_cleaned 1 1e-5 indobenchmark/indobert-base-p1
+loso_cnn_cleaned_s1 loso_cnn_cleaned 1 1e-5 indobenchmark/indobert-base-p1
+loso_detik_cleaned_s1 loso_detik_cleaned 1 1e-5 indobenchmark/indobert-base-p1
+loso_komdigi_hoaks_s1 loso_komdigi_hoaks 1 1e-5 indobenchmark/indobert-base-p1
+loso_kompas_4k_cleaned_s1 loso_kompas_4k_cleaned 1 1e-5 indobenchmark/indobert-base-p1
+loso_kompas_cleaned_s1 loso_kompas_cleaned 1 1e-5 indobenchmark/indobert-base-p1
+loso_tempo_6k_cleaned_s1 loso_tempo_6k_cleaned 1 1e-5 indobenchmark/indobert-base-p1
+loso_turnbackhoax_10k_cleaned_s1 loso_turnbackhoax_10k_cleaned 1 1e-5 indobenchmark/indobert-base-p1
+loso_turnbackhoax_cleaned_s1 loso_turnbackhoax_cleaned 1 1e-5 indobenchmark/indobert-base-p1

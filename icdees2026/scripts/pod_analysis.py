@@ -35,26 +35,35 @@ out["xsource"] = {"n_seeds": len(runs), "f1_weighted_mean": float(np.mean(f1s)),
 # --- leave-one-source-out ------------------------------------------------------------------------------------
 svm_loso = J("out_cross_source_sanitised.json")["C_leave_one_source_out"]
 zr = np.load(os.path.join(S, "out_ib_final_seed42.npz"))
+SEEDS = ("", "_s1", "_s2")                     # seed 42 (first batch), seeds 1 and 2
+sd = lambda v: float(np.std(v, ddof=1)) if len(v) > 1 else None
 loso = {}
 for s, v in svm_loso.items():
-    t = "loso_" + s
-    if t not in R: missing.append(t); continue
+    tags = [t for t in ("loso_" + s + x for x in SEEDS) if t in R]
+    missing += [t for t in ("loso_" + s + x for x in SEEDS) if t not in R]
+    if not tags: continue
+    rec = [R[t]["accuracy"] for t in tags]
     seen = src[zr["test_idx"]] == s
-    loso[s] = {"n": R[t]["n_test"], "ib_recall_unseen": R[t]["accuracy"],
-               "ib_recall_seen": float((zr["pred"][seen] == zr["true"][seen]).mean()),
+    loso[s] = {"n": R[tags[0]]["n_test"], "n_seeds": len(rec), "ib_recall_unseen": float(np.mean(rec)), "ib_recall_unseen_sd": sd(rec),
+               "ib_recall_unseen_runs": rec, "ib_recall_seen": float((zr["pred"][seen] == zr["true"][seen]).mean()),
                "svm_recall_unseen": v["recall_when_unseen"], "svm_recall_seen": v["recall_in_distribution"]}
 if loso:
     drop = lambda k: [100 * (d[k.replace("unseen", "seen")] - d[k]) for d in loso.values()]
     out["loso"] = {"per_source": loso, "ib_drop_min": min(drop("ib_recall_unseen")), "ib_drop_max": max(drop("ib_recall_unseen")),
                    "svm_drop_min": min(drop("svm_recall_unseen")), "svm_drop_max": max(drop("svm_recall_unseen")),
-                   "ib_better_on": [s for s, d in loso.items() if d["ib_recall_unseen"] > d["svm_recall_unseen"]]}
+                   "ib_better_on": [s for s, d in loso.items() if d["ib_recall_unseen"] > d["svm_recall_unseen"] + 0.0005],
+                   "ib_worse_on": [s for s, d in loso.items() if d["ib_recall_unseen"] < d["svm_recall_unseen"] - 0.0005]}
 
-# --- topic and time ------------------------------------------------------------------------------------------
+# --- topic and time: drop against the control trained with the same seed ---------------------------------------
 svm_ref = {"topic": (0.9654, 0.9756), "time": (0.9632, 0.9930)}       # SVM weighted F1, held out vs control (Table V)
 for k in ("topic", "time"):
-    if need(k, k + "_ctl"): missing += need(k, k + "_ctl"); continue
-    out[k] = {"ib_f1": R[k]["f1_weighted"], "ib_ctl": R[k + "_ctl"]["f1_weighted"], "ib_drop": 100 * (R[k + "_ctl"]["f1_weighted"] - R[k]["f1_weighted"]),
-              "svm_f1": svm_ref[k][0], "svm_ctl": svm_ref[k][1], "svm_drop": 100 * (svm_ref[k][1] - svm_ref[k][0])}
+    pairs = [(R[k + x], R[k + "_ctl" + x]) for x in SEEDS if k + x in R and k + "_ctl" + x in R]
+    missing += [t for x in SEEDS for t in (k + x, k + "_ctl" + x) if t not in R]
+    if not pairs: continue
+    drops = [100 * (c["f1_weighted"] - h["f1_weighted"]) for h, c in pairs]
+    out[k] = {"n_seeds": len(pairs), "ib_f1": float(np.mean([h["f1_weighted"] for h, _ in pairs])),
+              "ib_ctl": float(np.mean([c["f1_weighted"] for _, c in pairs])), "ib_drop": float(np.mean(drops)), "ib_drop_sd": sd(drops),
+              "ib_drop_runs": drops, "svm_f1": svm_ref[k][0], "svm_ctl": svm_ref[k][1], "svm_drop": 100 * (svm_ref[k][1] - svm_ref[k][0])}
 
 # --- encoders vs IndoBERT seed 42 (McNemar, continuity-corrected, Holm over the three) -------------------------
 pos = {j: i for i, j in enumerate(zr["test_idx"])}

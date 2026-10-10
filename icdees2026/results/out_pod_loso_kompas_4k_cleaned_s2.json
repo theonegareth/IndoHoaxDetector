@@ -1,0 +1,24 @@
+{
+  "tag": "loso_kompas_4k_cleaned_s2",
+  "split": "loso_kompas_4k_cleaned",
+  "seed": 2,
+  "lr": 1e-05,
+  "model": "indobenchmark/indobert-base-p1",
+  "device": "NVIDIA GeForce RTX 4090",
+  "n_train": 52384,
+  "n_val": 5821,
+  "n_test": 4729,
+  "val_f1_weighted_best": 0.997079557698818,
+  "accuracy": 0.9640515965320364,
+  "f1_weighted": 0.9816968130921618,
+  "f1_macro": null,
+  "balanced_accuracy": null,
+  "roc_auc": null,
+  "recall_factual": 0.9640515965320364,
+  "recall_hoax": null,
+  "train_time_s": 645.7617275714874,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.1"
+  }
+}

@@ -1,0 +1,8 @@
+topic_s1 topic 1 1e-5 indobenchmark/indobert-base-p1
+topic_ctl_s1 topic_ctl 1 1e-5 indobenchmark/indobert-base-p1
+time_s1 time 1 1e-5 indobenchmark/indobert-base-p1
+time_ctl_s1 time_ctl 1 1e-5 indobenchmark/indobert-base-p1
+topic_s2 topic 2 1e-5 indobenchmark/indobert-base-p1
+topic_ctl_s2 topic_ctl 2 1e-5 indobenchmark/indobert-base-p1
+time_s2 time 2 1e-5 indobenchmark/indobert-base-p1
+time_ctl_s2 time_ctl 2 1e-5 indobenchmark/indobert-base-p1

@@ -1,0 +1,24 @@
+{
+  "tag": "loso_turnbackhoax_10k_cleaned_s2",
+  "split": "loso_turnbackhoax_10k_cleaned",
+  "seed": 2,
+  "lr": 1e-05,
+  "model": "indobenchmark/indobert-base-p1",
+  "device": "NVIDIA GeForce RTX 4090",
+  "n_train": 55258,
+  "n_val": 6140,
+  "n_test": 1536,
+  "val_f1_weighted_best": 0.9965793191745664,
+  "accuracy": 0.9036458333333334,
+  "f1_weighted": 0.9493844049247606,
+  "f1_macro": null,
+  "balanced_accuracy": null,
+  "roc_auc": null,
+  "recall_factual": null,
+  "recall_hoax": 0.9036458333333334,
+  "train_time_s": 649.9725728034973,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.1"
+  }
+}
