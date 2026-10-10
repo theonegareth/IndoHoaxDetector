@@ -35,13 +35,23 @@ datasets concatenated with `text`, `title`, `label`, `source` and `url` columns.
 
 ## Setup
 
-Python 3.12, scikit-learn 1.7, PyTorch 2.6 (CUDA 12.4), Transformers 4.57.1, Sastrawi.
-The reported timings come from an Intel Core i7-12700H, 31.7 GB of RAM and an NVIDIA
-RTX 3050 Ti Laptop GPU (4 GB).
-
 ```
 pip install -r icdees2026/requirements.txt
 ```
+
+This installs current releases that include the security fixes (PyTorch 2.13 or later,
+Transformers 5.10 or later).
+
+**Environment of record.** The paper's numbers were produced with Python 3.12.5,
+scikit-learn 1.7.2, PyTorch 2.6.0 (CUDA 12.4) and Transformers 4.57.1. Those PyTorch and
+Transformers versions have published security advisories, so they are no longer pinned here.
+`train_ib_final.py` was re-checked under Transformers 5.10.0: a 2,100-document run gave the same
+accuracy, macro-F1 and ROC-AUC as under 4.57.1. It has not been re-run under PyTorch 2.13. To
+reproduce the paper exactly, install the versions above in an isolated environment, and do not
+expose that environment to untrusted model files.
+
+The reported timings come from an Intel Core i7-12700H, 31.7 GB of RAM and an NVIDIA RTX 3050 Ti
+Laptop GPU (4 GB).
 
 ## Models
 
