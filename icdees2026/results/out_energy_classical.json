@@ -1,0 +1,33 @@
+{
+  "idle_w": 21.35,
+  "models": {
+    "Logistic Regression": {
+      "train_s": 23.300425052642822,
+      "energy_wh": 0.2146359801987807,
+      "mean_w": 34.81666666666667,
+      "energy_above_idle_wh": 0.07645151495602395,
+      "samples": 24
+    },
+    "SVM": {
+      "train_s": 24.96322202682495,
+      "energy_wh": 0.2399425563481119,
+      "mean_w": 35.24999999999999,
+      "energy_above_idle_wh": 0.09189678127235834,
+      "samples": 26
+    },
+    "Naive Bayes": {
+      "train_s": 10.558434963226318,
+      "energy_wh": 0.09758110066586072,
+      "mean_w": 33.7,
+      "energy_above_idle_wh": 0.03496371553672685,
+      "samples": 14
+    },
+    "Random Forest": {
+      "train_s": 26.317842960357666,
+      "energy_wh": 0.34283915616406335,
+      "mean_w": 49.97441860465116,
+      "energy_above_idle_wh": 0.18675972638527552,
+      "samples": 43
+    }
+  }
+}
