@@ -19,6 +19,7 @@ datasets concatenated with `text`, `title`, `label`, `source` and `url` columns.
 | Sanitise and preprocess | `deleak2.py` | `deleaked2_preproc.csv` (62,934 docs) |
 | Corpus statistics | `dataset_stats.py` | `out_dataset_stats*.json` |
 | Tune classical models (5-fold CV) | `classical_sanitised.py` | `out_classical_sanitised.json` |
+| Extend the edge grid values | `grid_edge_check.py` | `out_grid_edge_check.json` |
 | Metrics, CIs, efficiency | `metrics_classical.py` | `out_metrics_classical.json` |
 | IndoBERT, seeds 42, 1, 2 | `train_ib_final.py SEED` | `out_ib_final_seed*.json` |
 | IndoBERT, publisher-disjoint | `train_ib_final.py 42 xsource` | `out_ib_final_seed42_xsource.json` |
